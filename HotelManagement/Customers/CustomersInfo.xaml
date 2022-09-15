@@ -1,0 +1,38 @@
+﻿<Window x:Class="HotelManagement.Customers.CustomersInfo"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:HotelManagement.Customers"
+        mc:Ignorable="d"
+        Title="CustomersInfo"  ResizeMode="NoResize" Height="500" Width="800" >
+    <Grid>
+        <DockPanel>
+            <Menu DockPanel.Dock="Top">
+                <MenuItem Header="_File">
+                    <MenuItem Header="_New" />
+                    <MenuItem Header="_Open" />
+                    <MenuItem Header="_Save" />
+                    <Separator />
+                    <MenuItem Header="_Exit" />
+                </MenuItem>
+            </Menu>
+            <TextBox AcceptsReturn="True" DockPanel.Dock="Top" Height="466" />
+
+
+
+        </DockPanel>
+        <Button Content="Головна" Margin="10,26,654,415" Background="#FFFFFEC6" Foreground="#FF452E2E" BorderBrush="#FFF4FFD0" Click="Button_Click"/>
+        <Button Content="Кімнати" Margin="151,26,513,415" Background="#FFFFFBDA" Foreground="#FF452E2E" BorderBrush="White" Click="Button_Click_2"/>
+        <Button Content="Користувачі" Margin="292,26,372,415" Background="#FFFEFFA5" Foreground="#FF452E2E" BorderBrush="White" Click="Button_Click_1"/>
+        <Button Content="Резервація" Margin="433,26,231,415" Background="#FFF5FF89" Foreground="#FF452E2E" BorderBrush="White" Click="Button_Click_1"/>
+        <DataGrid d:ItemsSource="{d:SampleData ItemCount=5}" Margin="54,173,54,173"/>
+        <ComboBox Margin="329,109,276,326">
+            <ComboBoxItem>Найдовше проживання</ComboBoxItem>
+            <ComboBoxItem>Кількість бронювань (>2)</ComboBoxItem>
+            <ComboBoxItem IsSelected="True">Показати всіх</ComboBoxItem>
+        </ComboBox>
+        <Label Content="Показати користувачів за вказаним критерієм:" Margin="54,105,400,311"/>
+        <Button Content="Застосувати" Margin="543,105,121,319" Background="#FFF5FF89" Foreground="#FF452E2E" BorderBrush="White" Click="Button_Click_1"/>
+    </Grid>
+</Window>
