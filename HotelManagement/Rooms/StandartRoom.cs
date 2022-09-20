@@ -20,7 +20,7 @@ namespace HotelManagement.Rooms
         protected double square;
         protected bool hasAppliances = false;
         protected double price;
-        protected List<DateTime> reservedDates;
+        protected List<DateTime> reservedDates = new List<DateTime>();
         protected bool hasBreakfast = false;
         protected bool hasBathroom = false;
         protected bool dailyCleaning = false;
@@ -93,6 +93,32 @@ namespace HotelManagement.Rooms
             for (var day = from.Date; day.Date <= dateTo.Date; day = day.AddDays(1))
                 reservedDates.Add(day);
         }
+        public bool checkIfReserved(DateTime from, DateTime dateTo)
+        {
+            int index = 0;
+            bool status = false;
+            if(reservedDates.Count != 0)
+            {
+                for (var day = from.Date; day.Date <= dateTo.Date; day = day.AddDays(1))
+                {
+                    for (int i = 0; i < reservedDates.Count; i++)
+                    {
+                        if (day.Date == reservedDates[i].Date)
+                        {
+                            index++;
+                            status = true;
+                        }
+                        else
+                        {
+                            status = false;
+                        }
+                        if (index >= 1) break;
+                    }
+                }
+            }
+            
+            return status;
+        }
         virtual public void setReserved(Customer customer, DateTime dateFrom, DateTime dateTo)
         {
             this.isReserved = true;
@@ -109,6 +135,11 @@ namespace HotelManagement.Rooms
         {
             return this.numberOfRoom;
         } 
+
+        public bool isAffordable(double priceFrom, double priceTo)
+        {
+            return (this.price >= priceFrom && this.price <= priceTo);
+        }
        
     }
 }

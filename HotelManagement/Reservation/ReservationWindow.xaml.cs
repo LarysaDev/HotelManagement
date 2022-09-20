@@ -2,7 +2,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Data;
 using System.Linq;
+using System.Reflection;
+using System.Security.Cryptography.Xml;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -13,6 +18,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Xml.Linq;
 using static HotelManagement.Reservation.ReservationWindow;
 
 namespace HotelManagement.Reservation
@@ -37,8 +43,8 @@ namespace HotelManagement.Reservation
 
           
         }
+        ObservableCollection<Room> myObjects;
 
-       
 
         public List<Room> rooms = new List<Room>();
         
@@ -59,47 +65,16 @@ namespace HotelManagement.Reservation
         {
          
             var dg = listOfRooms;
-
-            for (int i = 1; i < 8; ++i)
-            {
-                var column = new DataGridTextColumn();
-                switch (i)
-                {
-                    case 1:
-                        column.Header = "Number";
-                        break;
-                    case 2:
-                        column.Header = "Rooms";
-                        break;
-                    case 3:
-                        column.Header = "Beds";
-                        break;
-                    case 4:
-                        column.Header = "Windows";
-                        break;
-                    case 5:
-                        column.Header = "Square";
-                        break;
-                    case 6:
-                        column.Header = "Appliances";
-                        break;
-                    case 7:
-                        column.Header = "Price";
-                        break;
-                }
-               
-                column.Binding = new Binding((string)column.Header);
-                dg.Columns.Add(column);
-            }
-
+            myObjects = new ObservableCollection<Room>();
             HashSet<Hotel> hotels = allHotels.getListOfHotels();
-              foreach (Hotel hotel in hotels)
+            
+            foreach (Hotel hotel in hotels)
               {
                 HashSet<StandartRoom> stRooms = hotel.getStandartRooms();
                  if(stRooms != null)
                      foreach (var room in stRooms)
                   {
-                     rooms.Add(new Room() {
+                     myObjects.Add(new Room() {
                      Number = room.getNumber(),
                      Rooms = room.getRoomsAmount(),
                      Beds = room.getBeds(),
@@ -112,7 +87,7 @@ namespace HotelManagement.Reservation
                 if (luxRooms != null)
                     foreach (var room in luxRooms)
                     {
-                        rooms.Add(new Room()
+                        myObjects.Add(new Room()
                         {
                             Number = room.getNumber(),
                             Rooms = room.getRoomsAmount(),
@@ -124,13 +99,182 @@ namespace HotelManagement.Reservation
                         });
                     }
             }
-            
+            this.listOfRooms.ItemsSource = myObjects;
+            rooms.Clear();
+        }
+        bool getStandart = false;
+        bool getLux = false;
+      
+        
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            DateTime userDateFrom = new DateTime() ;
+            DateTime userDateTo = new DateTime();
+            double userPriceFrom = 0;
+            double userPriceTo = 0;
+            int userStars = 0;
 
-            foreach (var item in rooms)
+            if (dateFrom.SelectedDate != null)
             {
-                dg.Items.Add(item);
+                userDateFrom = dateFrom.SelectedDate.Value;
+                if (dateTo.SelectedDate != null) { 
+                    userDateTo = dateTo.SelectedDate.Value;
+                }
+            }
+            bool isInBudget = true;
+            if (priceFrom.Text != "")
+            {
+                userPriceFrom = System.Convert.ToDouble(priceFrom.Text);
+                if (priceTo.Text != "")
+                {
+                    userPriceTo = System.Convert.ToDouble(priceTo.Text);
+                }
+                else
+                {
+
+                }
+            }
+            if(stars.Value != 0)
+            {
+                userStars = (int)(stars.Value / 2 + 1);
             }
 
+            myObjects.Clear();
+            listOfRooms.Items.Refresh();
+
+            if(checkboxSt.IsChecked == true)
+            {
+                getStandart = true;
+            }
+            if(checkboxSt.IsChecked == false)
+            {
+                getStandart = false;
+            }
+            if (checkboxLx.IsChecked == false)
+            {
+                getLux = false;
+            }
+            if (checkboxLx.IsChecked == true)
+            {
+                getLux = true;
+            }
+            bool isReserved = false;
+            
+            foreach (Hotel hotel in allHotels.getFiltratedHotels(userStars))
+            {
+                priceTitle.Content = System.Convert.ToString(allHotels.getFiltratedHotels(userStars).Count);
+                if (getStandart == true)
+                {
+                    HashSet<StandartRoom> stRooms = hotel.getStandartRooms();
+      
+                    if (stRooms != null)
+                        foreach (var room in stRooms)
+                        {
+                            if(dateFrom != null)
+                            {
+                                if(dateTo != null)
+                                {
+                                    isReserved = room.checkIfReserved(userDateFrom, userDateTo); 
+                                }else
+                                {
+                                    isReserved = room.checkIfReserved(userDateFrom, userDateFrom);
+                                }
+                            }
+                            if(isReserved == false)
+                            {
+                                if (userPriceFrom != 0)
+                                {
+                                    if (userPriceTo != 0)
+                                    {
+                                        isInBudget = room.isAffordable(userPriceFrom, userPriceTo);
+                                    }
+                                    else isInBudget = room.isAffordable(userPriceFrom, userPriceFrom+1);
+                                }
+                                if (isInBudget)
+                                {
+                                    myObjects.Add(new Room()
+                                    {
+                                        Number = room.getNumber(),
+                                        Rooms = room.getRoomsAmount(),
+                                        Beds = room.getBeds(),
+                                        Windows = room.getWindows(),
+                                        Square = room.getSquare(),
+                                        Appliances = room.hasHouseholdAppliances(),
+                                        Price = room.getPrice()
+                                    });
+                                }
+                               
+                            } 
+                           
+                        }
+                }
+                   if(getLux == true)
+                {
+                    HashSet<LuxRoom> luxRooms = hotel.getLuxRooms();
+                    if (luxRooms != null)
+                        foreach (var room in luxRooms)
+                        {
+                            if (dateFrom != null)
+                            {
+                                if (dateTo != null)
+                                {
+                                    isReserved = room.checkIfReserved(userDateFrom, userDateTo);
+                                }
+                                else
+                                {
+                                    isReserved = room.checkIfReserved(userDateFrom, userDateFrom);
+                                }
+                            }
+                            if (isReserved == false)
+                            {
+                                if (userPriceFrom != 0)
+                                {
+                                    if (userPriceTo != 0)
+                                    {
+                                        isInBudget = room.isAffordable(userPriceFrom, userPriceTo);
+                                    }
+                                    else isInBudget = room.isAffordable(userPriceFrom, userPriceFrom + 1);
+                                }
+                                if (isInBudget)
+                                {
+                                    myObjects.Add(new Room()
+                                    {
+                                        Number = room.getNumber(),
+                                        Rooms = room.getRoomsAmount(),
+                                        Beds = room.getBeds(),
+                                        Windows = room.getWindows(),
+                                        Square = room.getSquare(),
+                                        Appliances = room.hasHouseholdAppliances(),
+                                        Price = room.getPrice()
+                                    });
+                                }
+                            }
+                        }
+                }
+                   
+                }
+
+            }
+
+        private void CheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            getStandart = true;
+        }
+
+        private void CheckBox1_Checked(object sender, RoutedEventArgs e)
+        {
+            getLux = false;
+        }
+
+        private void CheckBox_Checked_1(object sender, RoutedEventArgs e)
+        {
+            getStandart = true;
+        }
+
+        private void CheckBox_Checked_2(object sender, RoutedEventArgs e)
+        {
+            getLux = true;
         }
     }
-}
+    }
+

@@ -69,5 +69,6 @@ namespace HotelManagement.Rooms
         {
             return luxRooms;
         }
+        public int getStars() { return starsAmount; }
     }
 }

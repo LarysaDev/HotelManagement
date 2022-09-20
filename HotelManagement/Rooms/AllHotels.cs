@@ -36,7 +36,24 @@ namespace HotelManagement.Rooms
         {
             hotels = hotelSet;
         }
+        public HashSet<Hotel> getFiltratedHotels(int stars)
+        {
+            HashSet<Hotel> new_hotels;
+            if(stars == 0) { return hotels; }
+            else
+            {
+                new_hotels = new HashSet<Hotel>();
+               foreach(var hotel in this.hotels)
+                {
+                    if(hotel.starsAmount == stars)
+                    {
+                        new_hotels.Add(hotel);
+                    }
+                }
+                return new_hotels;
+            }
 
+        }
 
     }
 }
