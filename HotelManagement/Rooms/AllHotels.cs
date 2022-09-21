@@ -12,11 +12,11 @@ namespace HotelManagement.Rooms
    
     public class Singleton_AllHotels
     {
-        protected HashSet<Hotel> hotels;
+        protected List<Hotel> hotels;
 
         private static Singleton_AllHotels Instance = new Singleton_AllHotels(20);
         private Singleton_AllHotels(int hotelsAmount) {
-            hotels = new HashSet<Hotel>(hotelsAmount);
+            hotels = new List<Hotel>(hotelsAmount);
         }
 
         public static Singleton_AllHotels AllHotels
@@ -24,7 +24,7 @@ namespace HotelManagement.Rooms
             get{ return Instance; }
         }
     
-        public HashSet<Hotel> getListOfHotels()
+        public List<Hotel> getListOfHotels()
         {
             return hotels;
         }
@@ -32,17 +32,17 @@ namespace HotelManagement.Rooms
         {
             hotels.Add(hotel);
         }
-        public void addHotels(HashSet<Hotel> hotelSet)
+        public void addHotels(List<Hotel> hotelSet)
         {
             hotels = hotelSet;
         }
-        public HashSet<Hotel> getFiltratedHotels(int stars)
+        public List<Hotel> getFiltratedHotels(int stars)
         {
-            HashSet<Hotel> new_hotels;
+            List<Hotel> new_hotels;
             if(stars == 0) { return hotels; }
             else
             {
-                new_hotels = new HashSet<Hotel>();
+                new_hotels = new List<Hotel>();
                foreach(var hotel in this.hotels)
                 {
                     if(hotel.starsAmount == stars)

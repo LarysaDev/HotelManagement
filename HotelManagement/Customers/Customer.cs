@@ -14,13 +14,13 @@ namespace HotelManagement.Customers
         protected String lastName;
         protected String email;
         protected String phone;
-        protected List<int> reservedStandartRooms;
-        protected List<int> reservedLuxRooms;
-        protected List<int> daysOfLiving;
+        protected List<int> reservedStandartRooms = new List<int>();
+        protected List<int> reservedLuxRooms = new List<int>();
+        protected List<int> daysOfLiving = new List<int>();
         public Customer() { }
 
         public Customer(
-            int age, String firstName, String lastName, String email, String phone)
+            String firstName, String lastName, String email, String phone, int age)
         {
             this.age = age;
             this.firstName = firstName;
@@ -37,10 +37,45 @@ namespace HotelManagement.Customers
                 daysOfLiving++;
             this.daysOfLiving.Add(daysOfLiving);
         }
-        public void reserveLuxtRoom(int room, int daysOfLiving)
+        public void reserveLuxRoom(LuxRoom room, DateTime dayFrom, DateTime dateTo)
         {
-            reservedLuxRooms.Add(room);
+            reservedStandartRooms.Add(room.getNumber());
+            room.setReserved(this, dayFrom, dateTo);
+            int daysOfLiving = 0;
+            for (var day = dayFrom.Date; day.Date <= dateTo.Date; day = day.AddDays(1))
+                daysOfLiving++;
             this.daysOfLiving.Add(daysOfLiving);
+        }
+        public List<int> getDaysOfLiving()
+        {
+            return daysOfLiving;
+        }
+        public List<int> getBookedStandartRooms()
+        {
+            return reservedStandartRooms;
+        }
+        public List<int> getBookedLuxRooms()
+        {
+            return reservedLuxRooms;
+        }
+
+        public string getName() { return this.firstName; }
+        public string getlastname() { return this.lastName; }
+        public int getAge() { return this.age; }
+        public string getPhone() { return this.phone; }
+        public string getEmail() { return this.email; }
+        public int getLastBookedRoom()
+        {
+            int lastBooked = 0;
+            if (this.getBookedStandartRooms().Count != 0)
+            {
+                lastBooked = this.getBookedStandartRooms()[this.getBookedStandartRooms().Count - 1];
+            }
+            else if (this.getBookedLuxRooms().Count != 0)
+            {
+                lastBooked = this.getBookedLuxRooms()[this.getBookedLuxRooms().Count - 1];
+            }
+            return lastBooked;
         }
     }
 }

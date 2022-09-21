@@ -26,13 +26,22 @@
         <Button Content="Кімнати" Margin="151,26,513,415" Background="#FFFFFBDA" Foreground="#FF452E2E" BorderBrush="White" Click="Button_Click_2"/>
         <Button Content="Користувачі" Margin="292,26,372,415" Background="#FFFEFFA5" Foreground="#FF452E2E" BorderBrush="White" Click="Button_Click_1"/>
         <Button Content="Резервація" Margin="433,26,231,415" Background="#FFF5FF89" Foreground="#FF452E2E" BorderBrush="White" Click="Button_Click_1"/>
-        <DataGrid d:ItemsSource="{d:SampleData ItemCount=5}" Margin="54,173,54,173"/>
-        <ComboBox Margin="329,109,276,326">
+        <ComboBox x:Name="customerOption" Margin="329,109,276,326">
             <ComboBoxItem>Найдовше проживання</ComboBoxItem>
             <ComboBoxItem>Кількість бронювань (>2)</ComboBoxItem>
             <ComboBoxItem IsSelected="True">Показати всіх</ComboBoxItem>
         </ComboBox>
         <Label Content="Показати користувачів за вказаним критерієм:" Margin="54,105,400,311"/>
-        <Button Content="Застосувати" Margin="543,105,121,319" Background="#FFF5FF89" Foreground="#FF452E2E" BorderBrush="White" Click="Button_Click_1"/>
+        <DataGrid Grid.Row="0" Grid.Column="1" AutoGenerateColumns="False" CanUserAddRows="False" x:Name="listOfCustomers" Margin="64,200,40,42" Grid.RowSpan="3">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Name" Width="120" Binding="{Binding Name}"/>
+                <DataGridTextColumn Header="Lastname" Width="120" Binding="{Binding Lastname}"/>
+                <DataGridTextColumn Header="Age" Width="70" Binding="{Binding Age}"/>
+                <DataGridTextColumn Header="Phone" Width="100" Binding="{Binding Phone}"/>
+                <DataGridTextColumn Header="Email" Width="100" Binding="{Binding Email}"/>
+                <DataGridTextColumn Header="Room" Width="90" Binding="{Binding Room}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button x:Name="apply" Content="Застосувати" Margin="543,105,121,319" Background="#FFF5FF89" Foreground="#FF452E2E" BorderBrush="White" Click="Button1_Click_1"/>
     </Grid>
 </Window>

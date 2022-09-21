@@ -97,13 +97,12 @@ namespace HotelManagement.Rooms
         {
             int index = 0;
             bool status = false;
-            if(reservedDates.Count != 0)
-            {
+            
                 for (var day = from.Date; day.Date <= dateTo.Date; day = day.AddDays(1))
                 {
                     for (int i = 0; i < reservedDates.Count; i++)
                     {
-                        if (day.Date == reservedDates[i].Date)
+                        if (reservedDates[i].Date == day.Date)
                         {
                             index++;
                             status = true;
@@ -114,15 +113,17 @@ namespace HotelManagement.Rooms
                         }
                         if (index >= 1) break;
                     }
-                }
+                
             }
             
             return status;
         }
+        public List<DateTime> getBookedDays()
+        {
+            return reservedDates;
+        }
         virtual public void setReserved(Customer customer, DateTime dateFrom, DateTime dateTo)
         {
-            this.isReserved = true;
-            this.customer = customer;
             reserveRoom(dateFrom, dateTo);
             
         }
@@ -140,6 +141,9 @@ namespace HotelManagement.Rooms
         {
             return (this.price >= priceFrom && this.price <= priceTo);
         }
-       
+       public bool isReservedRoom()
+        {
+            return isReserved;
+        }
     }
 }

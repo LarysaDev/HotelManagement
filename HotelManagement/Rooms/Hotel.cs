@@ -11,22 +11,22 @@ namespace HotelManagement.Rooms
     {
         public string name { get; set; }
         public int starsAmount { get; set; }
-        protected HashSet<StandartRoom> standartRooms;
-        protected HashSet<LuxRoom> luxRooms;
+        protected List<StandartRoom> standartRooms;
+        protected List<LuxRoom> luxRooms;
 
         protected int peopleLivingInStandart = 0;
         protected int peopleLivingInLux = 0;
         public Hotel()
         {
-            standartRooms = new HashSet<StandartRoom>(20);
-            luxRooms = new HashSet<LuxRoom>(20);
+            standartRooms = new List<StandartRoom>(20);
+            luxRooms = new List<LuxRoom>(20);
         }
         public Hotel(string name, int starsAmount)
         {
             this.name = name;
             this.starsAmount = starsAmount;
         }
-        public void addRooms(HashSet<StandartRoom> rooms) 
+        public void addRooms(List<StandartRoom> rooms) 
         {
             this.standartRooms = rooms;
         }
@@ -52,7 +52,7 @@ namespace HotelManagement.Rooms
             room.setReserved(customer, dateFrom, dateTo);
             peopleLivingInLux++;
         }
-        public void addLuxRooms(HashSet<LuxRoom> rooms)
+        public void addLuxRooms(List<LuxRoom> rooms)
         {
             this.luxRooms = rooms;
         }
@@ -60,12 +60,12 @@ namespace HotelManagement.Rooms
         {
             luxRooms.Add(room);
         }
-        public HashSet<StandartRoom> getStandartRooms()
+        public List<StandartRoom> getStandartRooms()
         {
             return standartRooms;
 
         }
-        public HashSet<LuxRoom> getLuxRooms()
+        public List<LuxRoom> getLuxRooms()
         {
             return luxRooms;
         }

@@ -45,9 +45,6 @@ namespace HotelManagement.Reservation
         }
         ObservableCollection<Room> myObjects;
 
-
-        public List<Room> rooms = new List<Room>();
-        
         public ReservationWindow()
         {
             InitializeComponent();
@@ -66,11 +63,11 @@ namespace HotelManagement.Reservation
          
             var dg = listOfRooms;
             myObjects = new ObservableCollection<Room>();
-            HashSet<Hotel> hotels = allHotels.getListOfHotels();
+            List<Hotel> hotels = allHotels.getListOfHotels();
             
             foreach (Hotel hotel in hotels)
               {
-                HashSet<StandartRoom> stRooms = hotel.getStandartRooms();
+                List<StandartRoom> stRooms = hotel.getStandartRooms();
                  if(stRooms != null)
                      foreach (var room in stRooms)
                   {
@@ -83,7 +80,7 @@ namespace HotelManagement.Reservation
                      Appliances = room.hasHouseholdAppliances(),
                      Price = room.getPrice()});
                   }
-                HashSet<LuxRoom> luxRooms = hotel.getLuxRooms();
+                List<LuxRoom> luxRooms = hotel.getLuxRooms();
                 if (luxRooms != null)
                     foreach (var room in luxRooms)
                     {
@@ -100,7 +97,6 @@ namespace HotelManagement.Reservation
                     }
             }
             this.listOfRooms.ItemsSource = myObjects;
-            rooms.Clear();
         }
         bool getStandart = false;
         bool getLux = false;
@@ -162,10 +158,10 @@ namespace HotelManagement.Reservation
             
             foreach (Hotel hotel in allHotels.getFiltratedHotels(userStars))
             {
-                priceTitle.Content = System.Convert.ToString(allHotels.getFiltratedHotels(userStars).Count);
+              
                 if (getStandart == true)
                 {
-                    HashSet<StandartRoom> stRooms = hotel.getStandartRooms();
+                    List<StandartRoom> stRooms = hotel.getStandartRooms();
       
                     if (stRooms != null)
                         foreach (var room in stRooms)
@@ -210,7 +206,7 @@ namespace HotelManagement.Reservation
                 }
                    if(getLux == true)
                 {
-                    HashSet<LuxRoom> luxRooms = hotel.getLuxRooms();
+                    List<LuxRoom> luxRooms = hotel.getLuxRooms();
                     if (luxRooms != null)
                         foreach (var room in luxRooms)
                         {

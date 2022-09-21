@@ -66,7 +66,7 @@
         <Button Content="Шукати вільні номери" Margin="224,132,450,299" Background="#FFFFFBDA" Foreground="#FF452E2E" BorderBrush="White" Click="Button_Click_2"/>
         <Button Content="Кімнати" Margin="151,26,523,405" Background="#FFFFFBDA" Foreground="#FF452E2E" BorderBrush="White"/>
         <Button Content="Бронювати обраний номер" Margin="608,416,35,27" Background="#FFFFFEC6" Foreground="#FF452E2E" BorderBrush="#FFF4FFD0" Click="Button_Click"/>
-        <Button Content="Найпопулярніший запит" Margin="365,132,275,299" Background="#FFFFFBDA" Foreground="#FF452E2E" BorderBrush="White"/>
+        <Button Content="Найпопулярніший запит за датами" Margin="365,132,275,299" Background="#FFFFFBDA" Foreground="#FF452E2E" BorderBrush="White"/>
 
         <Button Content="Показати всі" Margin="540,133,134,298" Background="#FFFFFBDA" Foreground="#FF452E2E" BorderBrush="White" Click="Button_Click_1"/>
 
