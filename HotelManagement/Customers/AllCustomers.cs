@@ -9,12 +9,12 @@ namespace HotelManagement.Customers
 {
     public class Singleton_AllCustomers
     {
-        protected HashSet<Customer> customers;
+        protected List<Customer> customers;
 
         private static Singleton_AllCustomers Instance = new Singleton_AllCustomers(50);
         private Singleton_AllCustomers(int customersAmount)
         {
-            customers = new HashSet<Customer>(customersAmount);
+            customers = new List<Customer>(customersAmount);
         }
 
         public static Singleton_AllCustomers AllCustomers
@@ -22,7 +22,7 @@ namespace HotelManagement.Customers
             get { return Instance; }
         }
 
-        public HashSet<Customer> getListOfCustomers()
+        public List<Customer> getListOfCustomers()
         {
             return customers;
         }
@@ -30,7 +30,7 @@ namespace HotelManagement.Customers
         {
             customers.Add(customer);
         }
-        public void addCustomers(HashSet<Customer> customerSet)
+        public void addCustomers(List<Customer> customerSet)
         {
             customers = customerSet;
         }

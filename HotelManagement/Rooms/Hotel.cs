@@ -1,6 +1,7 @@
 ﻿using HotelManagement.Customers;
 using System;
 using System.Collections.Generic;
+using System.DirectoryServices;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,15 +12,14 @@ namespace HotelManagement.Rooms
     {
         public string name { get; set; }
         public int starsAmount { get; set; }
-        protected List<StandartRoom> standartRooms;
-        protected List<LuxRoom> luxRooms;
+        protected List<StandartRoom> standartRooms = new List<StandartRoom>(50);
+        protected List<LuxRoom> luxRooms = new List<LuxRoom>(50);
 
         protected int peopleLivingInStandart = 0;
         protected int peopleLivingInLux = 0;
         public Hotel()
         {
-            standartRooms = new List<StandartRoom>(20);
-            luxRooms = new List<LuxRoom>(20);
+           
         }
         public Hotel(string name, int starsAmount)
         {
@@ -70,5 +70,33 @@ namespace HotelManagement.Rooms
             return luxRooms;
         }
         public int getStars() { return starsAmount; }
+        public StandartRoom getBestStandartRoom() {
+            List<StandartRoom> list = new List<StandartRoom>(20);
+            StandartRoom bestRoom = new StandartRoom();
+            int bookings = 0;
+            foreach (var room in this.getStandartRooms())
+            {
+                if(room.getBookedDays().Count > bookings) {
+                    bookings = room.getBookedDays().Count;
+                    bestRoom = room;
+                }
+            }
+            return bestRoom;
+        }
+        public LuxRoom getBestLuxRoom()
+        {
+            List<LuxRoom> list = new List<LuxRoom>();
+            LuxRoom bestRoom = new LuxRoom();
+            int bookings = 0;
+            foreach (var room in this.getLuxRooms())
+            {
+                if (room.getBookedDays().Count > bookings)
+                {
+                    bookings = room.getBookedDays().Count;
+                    bestRoom = room;
+                }
+            }
+            return bestRoom;
+        }
     }
 }

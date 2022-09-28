@@ -125,7 +125,8 @@ namespace HotelManagement
             customer4.reserveStandartRoom(room4, new DateTime(2022, 12, 02), new DateTime(2022, 12, 04));
             customer5.reserveStandartRoom(room4, new DateTime(2022, 12, 02), new DateTime(2022, 12, 04));
             customer6.reserveStandartRoom(room5, new DateTime(2022, 11, 17), new DateTime(2022, 11, 23));
-            
+            customer1.reserveStandartRoom(room1, new DateTime(2022, 11, 26), new DateTime(2022, 11, 28));
+
         }
 
         public void fillCustomersData(Singleton_AllCustomers allCustomers)

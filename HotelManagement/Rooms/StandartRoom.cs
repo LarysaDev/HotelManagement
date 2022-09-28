@@ -97,25 +97,15 @@ namespace HotelManagement.Rooms
         {
             int index = 0;
             bool status = false;
-            
-                for (var day = from.Date; day.Date <= dateTo.Date; day = day.AddDays(1))
-                {
-                    for (int i = 0; i < reservedDates.Count; i++)
-                    {
-                        if (reservedDates[i].Date == day.Date)
-                        {
-                            index++;
-                            status = true;
-                        }
-                        else
-                        {
-                            status = false;
-                        }
-                        if (index >= 1) break;
-                    }
-                
+            List<DateTime> newList = new List<DateTime>();
+            for (var day = from.Date; day.Date <= dateTo.Date; day = day.AddDays(1))
+            {
+                newList.Add(day);   
             }
-            
+            foreach(var day in newList)
+            {
+                if (this.bookedDates().Contains(day)) { status = true; break; }
+            }    
             return status;
         }
         public List<DateTime> getBookedDays()

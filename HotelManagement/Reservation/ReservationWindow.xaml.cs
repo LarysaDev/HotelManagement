@@ -170,7 +170,7 @@ namespace HotelManagement.Reservation
                             {
                                 if(dateTo != null)
                                 {
-                                    isReserved = room.checkIfReserved(userDateFrom, userDateTo); 
+                                    isReserved = room.checkIfReserved(userDateFrom, userDateTo);
                                 }else
                                 {
                                     isReserved = room.checkIfReserved(userDateFrom, userDateFrom);
@@ -270,6 +270,72 @@ namespace HotelManagement.Reservation
         private void CheckBox_Checked_2(object sender, RoutedEventArgs e)
         {
             getLux = true;
+        }
+
+        private void Button_Click_3(object sender, RoutedEventArgs e)
+        {
+            myObjects.Clear();
+            listOfRooms.Items.Refresh();
+            //6.Знаходження найпопулярнішого запиту в діапазоні заданих дат.
+            // визначення за кількістю бронювань до цього часу та який вільний у заданому діапазоні дат
+            DateTime userDateFrom = new DateTime();
+            DateTime userDateTo = new DateTime();
+
+            if (dateFrom.SelectedDate != null)
+            {
+                userDateFrom = dateFrom.SelectedDate.Value;
+                if (dateTo.SelectedDate != null)
+                {
+                    userDateTo = dateTo.SelectedDate.Value;
+                }
+            }
+           
+                //find the most booked rooms 
+                StandartRoom bestStRoom = allHotels.getBestStRoom();
+            LuxRoom bestLuxRoom = allHotels.getBestLuxRoom();
+
+            bool isReservedStandart = false;
+            bool isReservedLux = false;
+            if (dateFrom != null)
+            {
+                if (dateTo != null)
+                {
+                    isReservedStandart = bestStRoom.checkIfReserved(userDateFrom, userDateTo);
+                    isReservedLux = bestLuxRoom.checkIfReserved(userDateFrom, userDateTo);
+                }
+                else
+                {
+                    isReservedStandart = bestStRoom.checkIfReserved(userDateFrom, userDateFrom);
+                    isReservedLux = bestLuxRoom.checkIfReserved(userDateFrom, userDateFrom);
+                }
+            }
+            if (isReservedStandart == false)
+            {
+                myObjects.Add(new Room()
+                {
+                    Number = bestStRoom.getNumber(),
+                    Rooms = bestStRoom.getRoomsAmount(),
+                    Beds = bestStRoom.getBeds(),
+                    Windows = bestStRoom.getWindows(),
+                    Square = bestStRoom.getSquare(),
+                    Appliances = bestStRoom.hasHouseholdAppliances(),
+                    Price = bestStRoom.getPrice()
+                });
+            }
+
+            if (isReservedLux == false)
+            {
+                myObjects.Add(new Room()
+                {
+                    Number = bestLuxRoom.getNumber(),
+                    Rooms = bestLuxRoom.getRoomsAmount(),
+                    Beds = bestLuxRoom.getBeds(),
+                    Windows = bestLuxRoom.getWindows(),
+                    Square = bestLuxRoom.getSquare(),
+                    Appliances = bestLuxRoom.hasHouseholdAppliances(),
+                    Price = bestLuxRoom.getPrice()
+                });
+            }
         }
     }
     }

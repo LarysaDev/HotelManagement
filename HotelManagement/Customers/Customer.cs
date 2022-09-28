@@ -77,5 +77,23 @@ namespace HotelManagement.Customers
             }
             return lastBooked;
         }
+        public int getMaxDaysOfLiving()
+        {
+            int maxDays = 0;
+            if (this.daysOfLiving.Count != 0)
+            {
+                foreach(var days in this.daysOfLiving)
+                {
+                    if(days > maxDays)maxDays = days;
+                }
+            }
+            return maxDays;
+        }
+        public int getReservationsCount()
+        {
+            int count = daysOfLiving.Count;
+            return count;
+        }
     }
+    
 }

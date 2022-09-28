@@ -4,6 +4,7 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Documents;
 
 
 namespace HotelManagement.Rooms
@@ -53,6 +54,42 @@ namespace HotelManagement.Rooms
                 return new_hotels;
             }
 
+        }
+       public StandartRoom getBestStRoom()
+        {
+            List<StandartRoom> list = new List<StandartRoom>();
+            StandartRoom bestRoom = new StandartRoom();
+            foreach (var hotel in AllHotels.getListOfHotels())
+            {
+                list.Add(hotel.getBestStandartRoom());
+            }
+            bestRoom = list[0];
+            foreach(var room in list)
+            {
+                if(room.getBookedDays().Count > bestRoom.getBookedDays().Count)
+                {
+                    bestRoom = room;
+                }
+            }
+            return bestRoom;
+        }
+        public LuxRoom getBestLuxRoom()
+        {
+            List<LuxRoom> list = new List<LuxRoom>();
+            LuxRoom bestRoom = new LuxRoom();
+            foreach (var hotel in AllHotels.getListOfHotels())
+            {
+                list.Add(hotel.getBestLuxRoom());
+            }
+            bestRoom = list[0];
+            foreach (var room in list)
+            {
+                if (room.getBookedDays().Count > bestRoom.getBookedDays().Count)
+                {
+                    bestRoom = room;
+                }
+            }
+            return bestRoom;
         }
 
     }

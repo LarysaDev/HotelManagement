@@ -68,23 +68,75 @@ namespace HotelManagement.Customers
         private void Button1_Click_1(object sender, RoutedEventArgs e)
         {
             var dg = listOfCustomers;
-
-            foreach (Customer customer in allCustomers.getListOfCustomers())
+            switch (customerOption.SelectedIndex)
             {
-                myCustomers.Add(new _Customer()
-                {
-                    Name = customer.getName(),
-                    Lastname = customer.getlastname(),
-                    Age = customer.getAge(),
-                    Phone = customer.getPhone(),
-                    Email = customer.getEmail(),
-                    Room = customer.getLastBookedRoom()
-                });
+                case 0:
+                    myCustomers.Clear();
+                    listOfCustomers.Items.Refresh();
+                    Customer customer1 = new Customer();
+                    customer1 = allCustomers.getListOfCustomers()[0];
+                    foreach(Customer testCustomer in allCustomers.getListOfCustomers())
+                    {
+                        if(testCustomer.getMaxDaysOfLiving() > customer1.getMaxDaysOfLiving())
+                        {
+                            customer1 = testCustomer;
+                        }
+
+                    }
+                    myCustomers.Add(new _Customer()
+                    {
+                        Name = customer1.getName(),
+                        Lastname = customer1.getlastname(),
+                        Age = customer1.getAge(),
+                        Phone = customer1.getPhone(),
+                        Email = customer1.getEmail(),
+                        Room = customer1.getLastBookedRoom()
+                    });
+
+                    break;
+                case 1:
+                    myCustomers.Clear();
+                    listOfCustomers.Items.Refresh();
+
+                    Customer customer2 = new Customer();
+                    customer2 = allCustomers.getListOfCustomers()[0];
+                    foreach (Customer testCustomer in allCustomers.getListOfCustomers())
+                    {
+                        if (testCustomer.getReservationsCount() > customer2.getReservationsCount())
+                        {
+                            customer2 = testCustomer;
+                        }
+
+                    }
+                    myCustomers.Add(new _Customer()
+                    {
+                        Name = customer2.getName(),
+                        Lastname = customer2.getlastname(),
+                        Age = customer2.getAge(),
+                        Phone = customer2.getPhone(),
+                        Email = customer2.getEmail(),
+                        Room = customer2.getLastBookedRoom()
+                    });
+                    break;
+                case 2:
+                    myCustomers.Clear();
+                    listOfCustomers.Items.Refresh();
+                    foreach (Customer customer in allCustomers.getListOfCustomers())
+                    {
+                        myCustomers.Add(new _Customer()
+                        {
+                            Name = customer.getName(),
+                            Lastname = customer.getlastname(),
+                            Age = customer.getAge(),
+                            Phone = customer.getPhone(),
+                            Email = customer.getEmail(),
+                            Room = customer.getLastBookedRoom()
+                        });
+                    };
+                    break;
             }
-            apply.Content = System.Convert.ToString(allCustomers.getListOfCustomers().Count);
             this.listOfCustomers.ItemsSource = myCustomers;
         }
-
-
     }
+
 }

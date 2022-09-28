@@ -29,11 +29,7 @@
      
         <Label Content="Оберіть дату поселення" Margin="33,84,616,324"/>
         <Label Content="Оберіть дату виїзду" Margin="33,147,586,258"/>
-       
-        <Label Content="Кількість осіб" Margin="33,205,675,203"/>
-        <TextBox TextWrapping="Wrap" Text="" Margin="33,231,654,215"/>
-
-
+   
         <Slider x:Name="stars" Margin="26,321,648,86"/>
         <Label Content="Кількість зірок" Margin="33,297,616,135"/>
         <Label Content="1      2      3      4      5" Margin="26,343,623,53"/>
@@ -63,17 +59,18 @@
             <CheckBox x:Name="checkboxSt" Content="Стандарт" IsChecked="True" HorizontalAlignment="Left" Margin="29,265,0,0" VerticalAlignment="Top" Height="19" Checked="CheckBox_Checked_1"/>
             <CheckBox x:Name="checkboxLx" Content="Люкс" IsChecked="True" HorizontalAlignment="Left" Margin="29,284,0,0" VerticalAlignment="Top" Height="19" Checked="CheckBox_Checked_2"/>
         </Grid>
-        <Button Content="Шукати вільні номери" Margin="224,132,450,299" Background="#FFFFFBDA" Foreground="#FF452E2E" BorderBrush="White" Click="Button_Click_2"/>
+        <Button x:Name="findRooms" Content="Шукати вільні номери" Margin="224,132,450,299" Background="#FFFFFBDA" Foreground="#FF452E2E" BorderBrush="White" Click="Button_Click_2"/>
         <Button Content="Кімнати" Margin="151,26,523,405" Background="#FFFFFBDA" Foreground="#FF452E2E" BorderBrush="White"/>
         <Button Content="Бронювати обраний номер" Margin="608,416,35,27" Background="#FFFFFEC6" Foreground="#FF452E2E" BorderBrush="#FFF4FFD0" Click="Button_Click"/>
-        <Button Content="Найпопулярніший запит за датами" Margin="365,132,275,299" Background="#FFFFFBDA" Foreground="#FF452E2E" BorderBrush="White"/>
+        <Button Content="Найпопулярніший запит за датами" Margin="365,132,207,297" Background="#FFFFFBDA" Foreground="#FF452E2E" BorderBrush="White" Click="Button_Click_3"/>
 
-        <Button Content="Показати всі" Margin="540,133,134,298" Background="#FFFFFBDA" Foreground="#FF452E2E" BorderBrush="White" Click="Button_Click_1"/>
+        <Button Content="Показати всі" Margin="608,132,66,299" Background="#FFFFFBDA" Foreground="#FF452E2E" BorderBrush="White" Click="Button_Click_1"/>
 
         <Label x:Name="priceTitle" Content="Оберіть ціновий діапазон" Margin="20,374,628,27"/>
         <TextBox x:Name="priceFrom" TextWrapping="Wrap" Text="" Margin="26,405,725,27"/>
         <TextBox x:Name="priceTo" TextWrapping="Wrap" Text="" Margin="114,405,638,27"/>
         <DatePicker x:Name="dateFrom" Margin="33,109,654,325"/>
         <DatePicker x:Name="dateTo" Margin="33,173,654,258"/>
+        <Label x:Name="test" Content="TECT" Margin="198,395,238,6"/>
     </Grid>
 </Window>
