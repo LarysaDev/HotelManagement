@@ -39,7 +39,7 @@ namespace HotelManagement.Customers
         }
         public void reserveLuxRoom(LuxRoom room, DateTime dayFrom, DateTime dateTo)
         {
-            reservedStandartRooms.Add(room.getNumber());
+            reservedLuxRooms.Add(room.getNumber());
             room.setReserved(this, dayFrom, dateTo);
             int daysOfLiving = 0;
             for (var day = dayFrom.Date; day.Date <= dateTo.Date; day = day.AddDays(1))

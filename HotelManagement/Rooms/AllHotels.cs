@@ -91,6 +91,33 @@ namespace HotelManagement.Rooms
             }
             return bestRoom;
         }
+        public List<StandartRoom> getStandartProposition() {
+            List<StandartRoom> list = new List<StandartRoom>();
+            foreach (var hotel in AllHotels.getListOfHotels())
+            {
+                List<StandartRoom> list2 = new List<StandartRoom>();
+                list2 = hotel.standartProposition();
+                foreach(var room in list2)
+                {
+                    list.Add(room);
+                }
+            }
+            return list;
+        }
+        public List<LuxRoom> getLuxProposition()
+        {
+            List<LuxRoom> list = new List<LuxRoom>();
+            foreach (var hotel in AllHotels.getListOfHotels())
+            {
+                List<LuxRoom> list2 = new List<LuxRoom>();
+                list2 = hotel.luxProposition();
+                foreach (var room in list2)
+                {
+                    list.Add(room);
+                }
+            }
+            return list;
+        }
 
     }
 }

@@ -20,15 +20,16 @@
             <TextBox AcceptsReturn="True" />
 
         </DockPanel>
-        <Button Content="Головна" Margin="10,26,654,372" Background="#FFFFFEC6" Foreground="#FF452E2E" BorderBrush="#FFF4FFD0" Click="Button_Click"/>
-        <Button Content="Кімнати" Margin="151,26,513,372" Background="#FFFFFBDA" Foreground="#FF452E2E" BorderBrush="White" Click="Button_Click_2"/>
-        <Button Content="Користувачі" Margin="292,26,372,372" Background="#FFFEFFA5" Foreground="#FF452E2E" BorderBrush="White" Click="Button_Click_1"/>
-        <Button Content="Резервація" Margin="433,26,231,372" Background="#FFF5FF89" Foreground="#FF452E2E" BorderBrush="White" Click="Button_Click_3"/>
-        <Label Content="Стандарт" Margin="31,82,538,310" FontSize="20"/>
-        <TextBox TextWrapping="Wrap" Text="Площа: 19 - 25 м². Вид: Історична частина міста.
-Найоптимальніший варіант для подорожуючих, які шукають зручне, затишне місце проживання в самому центрі міста за невисокою ціною. Номери цієї категорії просторі, із чудовим видом на площу Адама Міцкевича. У номері усе необхідне для комфортного відпочинку: одне ліжко, ванна кімната, кабельне телебачення, телефон, WI-FI, міні-косметика, халати та тапочки." Margin="31,125,299,210" BorderBrush="White"/>
-        <Label Content="Люкс" Margin="31,213,538,179" FontSize="20"/>
-        <TextBox TextWrapping="Wrap" Text="Площа: 50 м². Вид: Історична частина міста.
-Категорія номерів для справжніх цінителів гармонійного поєднання сучасних вигод та елегантних елементів декору з дотриманням усіх європейських стандартів. Розкішний двокімнатний номер чудово підійде як для ділової людини,так і для подружніх пар. Сучасні італійські меблі, чудова панорама на центральну частину Львова. В кімнатах затишні меблі, кабельне телебачення, WI-FI, вся необхідна техніка, зручні халати та тапочки, міні-косметика." BorderBrush="White" HorizontalAlignment="Right" Width="470" Margin="0,255,299,59"/>
+        <Button Content="Головна" Margin="0,17,654,358" Background="#FFFFFEC6" Foreground="#FF452E2E" BorderBrush="#FFF4FFD0" Click="Button_Click"/>
+        <Button Content="Кімнати"  Margin="127,17,473,358" Background="#FFFFFEC6" Foreground="#FF452E2E" BorderBrush="White" Click="Button_Click_2"/>
+        <Button Content="Користувачі"  Margin="276,17,301,358" Background="#FFFFFEC6" Foreground="#FF452E2E" BorderBrush="White" Click="Button_Click_1"/>
+        <Button Content="Резервація"  Margin="422,17,206,358" Background="#FFFFFEC6" Foreground="#FF452E2E" BorderBrush="White" Click="Button_Click_3"/>
+        <Label Content="Стандарт" Margin="31,101,538,291" FontSize="20"/>
+        <TextBox x:Name="text" TextWrapping="Wrap" Text="Площа: 19 - 25 м². Вид: Історична частина міста.
+Найоптимальніший варіант для подорожуючих, які шукають зручне, затишне місце проживання в самому центрі міста за невисокою ціною. Номери цієї категорії просторі, із чудовим видом на площу Адама Міцкевича. У номері усе необхідне для комфортного відпочинку: одне ліжко, ванна кімната, кабельне телебачення, телефон, WI-FI, міні-косметика, халати та тапочки." Margin="31,149,250,186" BorderBrush="White"/>
+        <Label Content="Люкс" Margin="39,227,530,165" FontSize="20"/>
+        <TextBox x:Name="text1" TextWrapping="Wrap" Text="Площа: 50 м². Вид: Історична частина міста.
+Категорія номерів для справжніх цінителів гармонійного поєднання сучасних вигод та елегантних елементів декору з дотриманням усіх європейських стандартів. Розкішний двокімнатний номер чудово підійде як для ділової людини,так і для подружніх пар. Сучасні італійські меблі, чудова панорама на центральну частину Львова. В кімнатах затишні меблі, кабельне телебачення, WI-FI, вся необхідна техніка, зручні халати та тапочки, міні-косметика." BorderBrush="White" HorizontalAlignment="Right" Width="538" Margin="0,273,223,41"/>
+        <Button Content=""  Margin="568,17,0,358" Background="#FFFFFEC6" Foreground="#FF452E2E" BorderBrush="White" />
     </Grid>
 </Window>

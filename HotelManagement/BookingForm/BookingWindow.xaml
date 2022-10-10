@@ -1,0 +1,26 @@
+﻿<Window x:Class="HotelManagement.BookingForm.BookingWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:HotelManagement.BookingForm"
+        mc:Ignorable="d"
+        Title="BookingWindow" Height="479" Width="647">
+
+    <Grid Margin="0,0,0,-6">
+
+        <TextBox x:Name="nameField" TextWrapping="Wrap" Text="" Margin="136,105,366,324"/>
+        <Label Content="Введіть свої особисті дані" HorizontalAlignment="Left" Margin="130,51,0,0" VerticalAlignment="Top"/>
+        <Label Content="Ім'я" HorizontalAlignment="Left" Margin="131,77,0,0" VerticalAlignment="Top" Width="91" Height="23"/>
+        <Label Content="Прізвище" HorizontalAlignment="Left" Margin="346,77,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="lastnameField" TextWrapping="Wrap" Text="" Margin="352,103,150,326"/>
+        <Label Content="Особистий телефон" HorizontalAlignment="Left" Margin="136,249,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="phoneField" TextWrapping="Wrap" Text="" Margin="136,280,353,149" RenderTransformOrigin="0.477,0.498"/>
+        <Label Content="Email" HorizontalAlignment="Left" Margin="136,161,0,0" VerticalAlignment="Top"/>
+        <Label Content="Вік" HorizontalAlignment="Left" Margin="346,161,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="emailField" TextWrapping="Wrap" Text="" Margin="136,196,366,233"/>
+        <TextBox x:Name="ageField" TextWrapping="Wrap" Text="" Margin="359,196,150,233" />
+        <Button x:Name="submitBtn" Content="Підтвердити бронювання" HorizontalAlignment="Left" Height="35" Margin="201,371,0,0" VerticalAlignment="Top" Width="178" Click="submitBtn_Click"/>
+    </Grid>
+
+</Window>

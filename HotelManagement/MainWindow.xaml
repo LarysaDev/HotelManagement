@@ -7,24 +7,31 @@
         mc:Ignorable="d"
         Title="MainWindow" ResizeMode="NoResize" Height="500" Width="800" BorderBrush="#FFD45151">
     <Grid>
-        <DockPanel>
+        <DockPanel Margin="0,6,0,-6">
             <Menu DockPanel.Dock="Top">
                 <MenuItem Header="_File">
                     <MenuItem Header="_New" />
                     <MenuItem Header="_Open" />
                     <MenuItem Header="_Save" />
+                    <MenuItem Header="_Save as" />
                     <Separator />
-                    <MenuItem Header="_Exit" />
+                    <MenuItem Header="_Exit" Click="exit_Click" />
+                </MenuItem>
+                <MenuItem Header="_Edit" >
+                    <MenuItem Header="_Cut"/>
+                    <MenuItem Header="_Copy" Command="Copy" Click="copy_Click"/>
+                    <MenuItem Header="_Paste" Command="Paste"/>
                 </MenuItem>
             </Menu>
-            <TextBox AcceptsReturn="True" DockPanel.Dock="Top" />
+            <TextBox AcceptsReturn="True" DockPanel.Dock="Top" Height="457" Width="793" />
+           
+
         </DockPanel>
-        <Button Content="Головна" Margin="10,26,654,390" Background="#FFFFFEC6" Foreground="#FF452E2E" BorderBrush="#FFF4FFD0"/>
-        <Button Content="Кімнати" Margin="151,26,513,390" Background="#FFFFFBDA" Foreground="#FF452E2E" BorderBrush="White" Click="Button_Click_2"/>
-        <Button Content="Користувачі" Margin="292,26,372,390" Background="#FFFEFFA5" Foreground="#FF452E2E" BorderBrush="White" Click="Button_Click_1"/>
-        <Button Content="Резервація" Margin="433,26,231,390" Background="#FFF5FF89" Foreground="#FF452E2E" BorderBrush="White" Click="Button_Click_3"/>
-        <Label Content="Ласкаво просимо!" Margin="242,173,242,207" FontSize="36" FontWeight="Normal" FontStyle="Normal" Opacity="0.5"/>
-        <Button x:Name="goBtn" Content="Перейти до бронювання" Margin="292,238,299,160" Background="#FFFFF776" Foreground="Black" FontSize="16" Click="Button_Click">
+        <Button Content="Головна" Margin="0,23,634,393" Background="#FFFFFEC6" Foreground="#FF452E2E" BorderBrush="#FFF4FFD0" Click="Button_Click_4"/>
+        <Button Content="Кімнати" Margin="149,23,496,393" Background="#FFFFFEC6" Foreground="#FF452E2E" BorderBrush="White" Click="Button_Click_2"/>
+        <Button Content="Користувачі" Margin="264,23,314,393" Background="#FFFFFEC6" Foreground="#FF452E2E" BorderBrush="White" Click="Button_Click_1"/>
+        <Button Content="Резервація" Margin="433,23,231,393" Background="#FFFFFEC6" Foreground="#FF452E2E" BorderBrush="White" Click="Button_Click_3"/>
+        <Button x:Name="goBtn" Content="Перейти до бронювання" Margin="296,248,296,179" Background="#FFFFF776" Foreground="Black" FontSize="16" Click="Button_Click">
             <Button.BorderBrush>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="Black"/>
@@ -32,6 +39,14 @@
                 </LinearGradientBrush>
             </Button.BorderBrush>
         </Button>
+        <TextBox x:Name="welcomeText" TextWrapping="Wrap" Text="    mSpace - простір для менеджменту готелями різних рівнів.
+                 
+                 
+                 
+                 Кнопкою нижче Ви зможете перейти до резервації номеру,де зможете обрати всі необхідні параметри для Вашого житла " Margin="192,291,192,23" IsReadOnly="true" BorderThickness="0" IsTabStop="False" FontSize="16"/>
         <Button Content="Button" HorizontalAlignment="Left" Margin="1067,354,0,0" VerticalAlignment="Top" Width="0"/>
+        <Button  Margin="553,23,0,393" Background="#FFFFFEC6" Foreground="#FF452E2E" BorderBrush="White"/>
+        <Label Content="mSpace🏬" Margin="294,143,271,242" FontSize="40"/>
+        <TextBox x:Name="welcomeText_Copy" TextWrapping="Wrap" Text="Copyright © 2022. All Rights Reserved" Margin="254,423,254,10" IsReadOnly="true" BorderThickness="0" IsTabStop="False" FontSize="16" TextChanged="welcomeText_Copy_TextChanged"/>
     </Grid>
 </Window>

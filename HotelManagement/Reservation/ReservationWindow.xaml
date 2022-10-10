@@ -10,26 +10,29 @@
         <DockPanel>
             <Menu DockPanel.Dock="Top">
                 <MenuItem Header="_File">
-                    <MenuItem Header="_New" />
-                    <MenuItem Header="_Open" />
-                    <MenuItem Header="_Save" />
+                    <MenuItem Header="_Open" Click="open_Click"/>
+                    <MenuItem Header="_Save" Click="save_Click" />
+                    <MenuItem Header="_Save as" Click="saveAs_Click"/>
                     <Separator />
-                    <MenuItem Header="_Exit" />
+                    <MenuItem Header="_Exit" Click="exit_Click"/>
                 </MenuItem>
+                <MenuItem Header="_Edit" >
+                    <MenuItem Header="_Cut"/>
+                    <MenuItem Header="_Copy"/>
+                    <MenuItem Header="_Paste" Click="cm_paste_Click"/>
+                </MenuItem>
+
             </Menu>
             <TextBox AcceptsReturn="True" />
 
 
 
         </DockPanel>
-        <Button Content="Головна" Margin="10,26,664,405" Background="#FFFFFEC6" Foreground="#FF452E2E" BorderBrush="#FFF4FFD0" Click="Button_Click"/>
-        <Button Content="Кімнати" Margin="151,26,523,405" Background="#FFFFFBDA" Foreground="#FF452E2E" BorderBrush="White"/>
-        <Button Content="Користувачі" Margin="292,26,382,405" Background="#FFFEFFA5" Foreground="#FF452E2E" BorderBrush="White"/>
-        <Button Content="Резервація" Margin="433,26,253,405" Background="#FFF5FF89" Foreground="#FF452E2E" BorderBrush="White"/>
-     
-        <Label Content="Оберіть дату поселення" Margin="33,84,616,324"/>
-        <Label Content="Оберіть дату виїзду" Margin="33,147,586,258"/>
-   
+
+
+        <Label Content="Оберіть дату поселення" Margin="25,84,616,324"/>
+        <Label Content="Оберіть дату виїзду" Margin="25,147,586,258"/>
+
         <Slider x:Name="stars" Margin="26,321,648,86"/>
         <Label Content="Кількість зірок" Margin="33,297,616,135"/>
         <Label Content="1      2      3      4      5" Margin="26,343,623,53"/>
@@ -46,7 +49,16 @@
             </Grid.ColumnDefinitions>
 
             <DataGrid Grid.Row="0" Grid.Column="1" AutoGenerateColumns="False" CanUserAddRows="False" x:Name="listOfRooms" Margin="64,200,40,42" Grid.RowSpan="3">
+                <DataGrid.ContextMenu>
+                    <ContextMenu Name="cm">
+                        <MenuItem Header="Open" Click="cm_open_Click"/>
+                        <MenuItem Header="Save" Click="cm_save_Click"/>
+                        <MenuItem Header="SaveAs" Click="cm_saveAs_Click"/>
+                    </ContextMenu>
+                </DataGrid.ContextMenu>
                 <DataGrid.Columns>
+                    <DataGridTextColumn Header="HotelName" Width="70" Binding="{Binding HotelName}"/>
+                    <DataGridTextColumn Header="Stars" Width="70" Binding="{Binding Stars}"/>
                     <DataGridTextColumn Header="Number" Width="70" Binding="{Binding Number}"/>
                     <DataGridTextColumn Header="Rooms" Width="70" Binding="{Binding Rooms}"/>
                     <DataGridTextColumn Header="Beds" Width="70" Binding="{Binding Beds}"/>
@@ -56,21 +68,41 @@
                     <DataGridTextColumn Header="Price" Width="100" Binding="{Binding Price}"/>
                 </DataGrid.Columns>
             </DataGrid>
+
             <CheckBox x:Name="checkboxSt" Content="Стандарт" IsChecked="True" HorizontalAlignment="Left" Margin="29,265,0,0" VerticalAlignment="Top" Height="19" Checked="CheckBox_Checked_1"/>
             <CheckBox x:Name="checkboxLx" Content="Люкс" IsChecked="True" HorizontalAlignment="Left" Margin="29,284,0,0" VerticalAlignment="Top" Height="19" Checked="CheckBox_Checked_2"/>
         </Grid>
         <Button x:Name="findRooms" Content="Шукати вільні номери" Margin="224,132,450,299" Background="#FFFFFBDA" Foreground="#FF452E2E" BorderBrush="White" Click="Button_Click_2"/>
-        <Button Content="Кімнати" Margin="151,26,523,405" Background="#FFFFFBDA" Foreground="#FF452E2E" BorderBrush="White"/>
-        <Button Content="Бронювати обраний номер" Margin="608,416,35,27" Background="#FFFFFEC6" Foreground="#FF452E2E" BorderBrush="#FFF4FFD0" Click="Button_Click"/>
+        <Button Content="Бронювати обраний номер" Margin="577,416,35,10" Background="#FFFFFEC6" Foreground="#FF452E2E" BorderBrush="#FFF4FFD0" Click="Button_Click"/>
         <Button Content="Найпопулярніший запит за датами" Margin="365,132,207,297" Background="#FFFFFBDA" Foreground="#FF452E2E" BorderBrush="White" Click="Button_Click_3"/>
 
-        <Button Content="Показати всі" Margin="608,132,66,299" Background="#FFFFFBDA" Foreground="#FF452E2E" BorderBrush="White" Click="Button_Click_1"/>
-
         <Label x:Name="priceTitle" Content="Оберіть ціновий діапазон" Margin="20,374,628,27"/>
-        <TextBox x:Name="priceFrom" TextWrapping="Wrap" Text="" Margin="26,405,725,27"/>
-        <TextBox x:Name="priceTo" TextWrapping="Wrap" Text="" Margin="114,405,638,27"/>
+        <TextBox x:Name="priceFrom" TextWrapping="Wrap" Text="" Margin="26,405,725,39"/>
+        <TextBox x:Name="priceTo" TextWrapping="Wrap" Text="" Margin="114,405,638,39"/>
         <DatePicker x:Name="dateFrom" Margin="33,109,654,325"/>
         <DatePicker x:Name="dateTo" Margin="33,173,654,258"/>
-        <Label x:Name="test" Content="TECT" Margin="198,395,238,6"/>
+        <Button Content="Головна"  Margin="0,19,654,400" Background="#FFFFFEC6" Foreground="#FF452E2E" BorderBrush="#FFF4FFD0" Click="Button_Click"/>
+        <Button Content="Кімнати"  Margin="114,19,522,400" Background="#FFFFFEC6" Foreground="#FF452E2E" BorderBrush="White" RenderTransformOrigin="0.5,0.5">
+            <Button.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform AngleY="-0.332"/>
+                    <RotateTransform/>
+                    <TranslateTransform Y="-0.394"/>
+                </TransformGroup>
+            </Button.RenderTransform>
+        </Button>
+        <Button Content="Користувачі" Margin="259,19,380,400" Background="#FFFFFEC6" Foreground="#FF452E2E" BorderBrush="White" Click="Button_Click_4"/>
+        <Button Content="Резервація"  Margin="391,19,247,400" Background="#FFFFFEC6" Foreground="#FF452E2E" BorderBrush="White"/>
+        <Button Content=""  Margin="519,18,-1,401" Background="#FFFFFEC6" Foreground="#FF452E2E" BorderBrush="White" RenderTransformOrigin="0.5,0.5">
+            <Button.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform AngleY="-0.332"/>
+                    <RotateTransform/>
+                    <TranslateTransform Y="-0.394"/>
+                </TransformGroup>
+            </Button.RenderTransform>
+        </Button>
     </Grid>
 </Window>

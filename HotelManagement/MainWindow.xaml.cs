@@ -42,14 +42,12 @@ namespace HotelManagement
             Hotel hotel3 = new Hotel("Willa", 3);
             Hotel hotel4 = new Hotel("Jam", 4);
             Hotel hotel5 = new Hotel("Sonata", 5);
-            Hotel hotel6 = new Hotel("Plazma", 3);
 
             hotelSet.Add(hotel1);
             hotelSet.Add(hotel2);
             hotelSet.Add(hotel3);
             hotelSet.Add(hotel4);
             hotelSet.Add(hotel5);
-            hotelSet.Add(hotel6);
 
             List<StandartRoom> standartRooms1 = new List<StandartRoom>(5);
             List<LuxRoom> luxRooms1 = new List<LuxRoom>(5);
@@ -114,16 +112,16 @@ namespace HotelManagement
             allCustomers.addCustomer(customer6);
 
             StandartRoom room1 = standartRooms1[1];
-            LuxRoom room2 = hotel4.getLuxRooms()[1];
+            LuxRoom room2 = hotel4.getLuxRooms()[1];//212
             StandartRoom room3 = hotel3.getStandartRooms()[1];
             LuxRoom room4 = hotel2.getLuxRooms()[0];
-            StandartRoom room5 = hotel4.getStandartRooms()[1];
+            StandartRoom room5 = hotel4.getStandartRooms()[1]; //111
 
             customer1.reserveStandartRoom(room1, new DateTime(2022, 11, 12), new DateTime(2022, 11, 13));
-            customer2.reserveStandartRoom(room2, new DateTime(2022, 11, 20), new DateTime(2022, 11, 26));
+            customer2.reserveLuxRoom(room2, new DateTime(2022, 11, 20), new DateTime(2022, 11, 26));
             customer3.reserveStandartRoom(room3, new DateTime(2022, 12, 02), new DateTime(2022, 12, 04));
-            customer4.reserveStandartRoom(room4, new DateTime(2022, 12, 02), new DateTime(2022, 12, 04));
-            customer5.reserveStandartRoom(room4, new DateTime(2022, 12, 02), new DateTime(2022, 12, 04));
+            customer4.reserveLuxRoom(room4, new DateTime(2022, 12, 02), new DateTime(2022, 12, 04));
+            customer5.reserveLuxRoom(room4, new DateTime(2022, 12, 02), new DateTime(2022, 12, 04));
             customer6.reserveStandartRoom(room5, new DateTime(2022, 11, 17), new DateTime(2022, 11, 23));
             customer1.reserveStandartRoom(room1, new DateTime(2022, 11, 26), new DateTime(2022, 11, 28));
 
@@ -131,10 +129,8 @@ namespace HotelManagement
 
         public void fillCustomersData(Singleton_AllCustomers allCustomers)
         {
-           
-
-
         }
+        
         public MainWindow()
         {
             Singleton_AllHotels allHotels = Singleton_AllHotels.AllHotels;
@@ -150,7 +146,16 @@ namespace HotelManagement
             reservationWindow.Show();
           
         }
+        private void exit_Click(object sender, RoutedEventArgs e)
+        {
+            System.Windows.Application.Current.Shutdown();
+        }
+        private void copy_Click(object sender, RoutedEventArgs e)
+        {
+            Clipboard.SetText(welcomeText.SelectedText);
+        }
 
+       
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             this.Hide();
@@ -170,6 +175,16 @@ namespace HotelManagement
             this.Hide();
             ReservationWindow reservationW = new ReservationWindow();
             reservationW.Show();
+        }
+
+        private void welcomeText_Copy_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void Button_Click_4(object sender, RoutedEventArgs e)
+        {
+
         }
     }
     

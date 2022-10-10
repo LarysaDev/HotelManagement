@@ -97,7 +97,6 @@ namespace HotelManagement.Customers
                 case 1:
                     myCustomers.Clear();
                     listOfCustomers.Items.Refresh();
-
                     Customer customer2 = new Customer();
                     customer2 = allCustomers.getListOfCustomers()[0];
                     foreach (Customer testCustomer in allCustomers.getListOfCustomers())

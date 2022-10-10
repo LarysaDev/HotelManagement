@@ -1,4 +1,6 @@
-﻿using System;
+﻿using HotelManagement.Customers;
+using HotelManagement.Reservation;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -38,12 +40,16 @@ namespace HotelManagement.Rooms
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-
+            CustomersInfo customersInfo = new CustomersInfo();
+            this.Hide();
+            customersInfo.Show();
         }
 
         private void Button_Click_3(object sender, RoutedEventArgs e)
         {
-
+            ReservationWindow reservationWindow = new ReservationWindow();
+            this.Hide();
+            reservationWindow.Show();
         }
     }
 }

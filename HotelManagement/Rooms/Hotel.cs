@@ -21,6 +21,9 @@ namespace HotelManagement.Rooms
         {
            
         }
+        public void setName(String name) { this.name = name; }
+        public void setStars(int stars) { this.starsAmount = stars; }
+        public String getName() { return this.name; }
         public Hotel(string name, int starsAmount)
         {
             this.name = name;
@@ -97,6 +100,31 @@ namespace HotelManagement.Rooms
                 }
             }
             return bestRoom;
+        }
+        public List<StandartRoom> standartProposition() {
+            List<StandartRoom> list = new List<StandartRoom>();
+            StandartRoom bestRoom = new StandartRoom();
+            foreach (var room in this.getStandartRooms())
+            {
+                if (room.getBookedDays().Count > 0)
+                {
+                    list.Add(room);
+                }
+            }
+            return list;
+        }
+        public List<LuxRoom> luxProposition()
+        {
+            List<LuxRoom> list = new List<LuxRoom>();
+            StandartRoom bestRoom = new StandartRoom();
+            foreach (var room in this.getLuxRooms())
+            {
+                if (room.getBookedDays().Count > 0)
+                {
+                    list.Add(room);
+                }
+            }
+            return list;
         }
     }
 }
