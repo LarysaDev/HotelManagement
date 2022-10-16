@@ -36,12 +36,12 @@
         <Slider x:Name="stars" Margin="26,321,648,86"/>
         <Label Content="Кількість зірок" Margin="33,297,616,135"/>
         <Label Content="1      2      3      4      5" Margin="26,343,623,53"/>
-        <Grid>
+        <Grid Margin="0,0,0,10">
             <Grid.RowDefinitions>
-                <RowDefinition Height="6*"/>
-                <RowDefinition Height="1*"/>
-                <RowDefinition Height="1*"/>
-                <RowDefinition Height="1*"/>
+                <RowDefinition Height="322.693"/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*"/>
@@ -74,9 +74,9 @@
         </Grid>
         <Button x:Name="findRooms" Content="Шукати вільні номери" Margin="224,132,450,299" Background="#FFFFFBDA" Foreground="#FF452E2E" BorderBrush="White" Click="Button_Click_2"/>
         <Button Content="Бронювати обраний номер" Margin="577,416,35,10" Background="#FFFFFEC6" Foreground="#FF452E2E" BorderBrush="#FFF4FFD0" Click="Button_Click"/>
-        <Button Content="Найпопулярніший запит за датами" Margin="365,132,207,297" Background="#FFFFFBDA" Foreground="#FF452E2E" BorderBrush="White" Click="Button_Click_3"/>
+        <Button Content="Найпопулярніший запит за обраною датою" Margin="365,132,207,297" Background="#FFFFFBDA" Foreground="#FF452E2E" BorderBrush="White" Click="Button_Click_3"/>
 
-        <Label x:Name="priceTitle" Content="Оберіть ціновий діапазон" Margin="20,374,628,27"/>
+        <Label x:Name="priceTitle" Content="Оберіть ціновий діапазон" Margin="20,374,616,27"/>
         <TextBox x:Name="priceFrom" TextWrapping="Wrap" Text="" Margin="26,405,725,39"/>
         <TextBox x:Name="priceTo" TextWrapping="Wrap" Text="" Margin="114,405,638,39"/>
         <DatePicker x:Name="dateFrom" Margin="33,109,654,325"/>
@@ -104,5 +104,6 @@
                 </TransformGroup>
             </Button.RenderTransform>
         </Button>
+        <Button Content="Додати номер" Margin="477,416,238,10" Background="#FFFFFEC6" Foreground="#FF452E2E" BorderBrush="#FFF4FFD0" Click="addNumber"/>
     </Grid>
 </Window>

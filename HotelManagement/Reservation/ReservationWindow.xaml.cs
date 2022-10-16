@@ -52,12 +52,60 @@ namespace HotelManagement.Reservation
           
         }
         ObservableCollection<Room> myObjects;
-
+        ObservableCollection<Room> allObjects;
         public ReservationWindow()
         {
             InitializeComponent();
+            Singleton_AllHotels allHotels = Singleton_AllHotels.AllHotels;
+            Singleton_AllCustomers allCustomers = Singleton_AllCustomers.AllCustomers;
         }
+        private static ObservableCollection<Room> displayList(List<Hotel> list, DataGrid listOfRooms, ObservableCollection<Room> myObjects)
+        {
+            var dg = listOfRooms;
+            myObjects = new ObservableCollection<Room>();
+            
+            foreach (Hotel hotel in list)
+            {
+                List<StandartRoom> stRooms = hotel.getStandartRooms();
+                if (stRooms != null)
+                    foreach (var room in stRooms)
+                    {
+                        myObjects.Add(new Room()
+                        {
+                            HotelName = hotel.getName(),
+                            Stars = hotel.getStars(),
+                            Number = room.getNumber(),
+                            Rooms = room.getRoomsAmount(),
+                            Beds = room.getBeds(),
+                            Windows = room.getWindows(),
+                            Square = room.getSquare(),
+                            Appliances = room.hasHouseholdAppliances(),
+                            Price = room.getPrice()
+                        });
+                    }
+                List<LuxRoom> luxRooms = hotel.getLuxRooms();
+                if (luxRooms != null)
+                    foreach (var room in luxRooms)
+                    {
+                        myObjects.Add(new Room()
+                        {
+                            HotelName = hotel.getName(),
+                            Stars = hotel.getStars(),
+                            Number = room.getNumber(),
+                            Rooms = room.getRoomsAmount(),
+                            Beds = room.getBeds(),
+                            Windows = room.getWindows(),
+                            Square = room.getSquare(),
+                            Appliances = room.hasHouseholdAppliances(),
+                            Price = room.getPrice()
+                        });
+                    }
+            }
 
+            listOfRooms.ItemsSource = myObjects;
+
+            return myObjects;
+        }
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             BookingWindow bookingForm = new BookingWindow();
@@ -115,12 +163,14 @@ namespace HotelManagement.Reservation
                 }
              
             }
-
         }
-
 
         private void cm_open_Click(object sender, RoutedEventArgs e)
         {
+            List<Hotel> hotelSet = new List<Hotel>();
+            List<LuxRoom> standartRooms1 = new List<LuxRoom>();
+            List<LuxRoom> luxRooms1 = new List<LuxRoom>();
+
             Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
             dlg.DefaultExt = ".txt";
             dlg.Filter = "Text files (*.txt)|*.txt";
@@ -133,49 +183,12 @@ namespace HotelManagement.Reservation
 
             List<Hotel> list = new List<Hotel>();
             list = fileManager.createList();
-
-            var dg = listOfRooms;
-            myObjects = new ObservableCollection<Room>();
-
-            foreach (Hotel hotel in list)
-            {
-                List<StandartRoom> stRooms = hotel.getStandartRooms();
-                if (stRooms != null)
-                    foreach (var room in stRooms)
-                    {
-                        myObjects.Add(new Room()
-                        {
-                            HotelName = hotel.getName(),
-                            Stars = hotel.getStars(),
-                            Number = room.getNumber(),
-                            Rooms = room.getRoomsAmount(),
-                            Beds = room.getBeds(),
-                            Windows = room.getWindows(),
-                            Square = room.getSquare(),
-                            Appliances = room.hasHouseholdAppliances(),
-                            Price = room.getPrice()
-                        });
-                    }
-                List<LuxRoom> luxRooms = hotel.getLuxRooms();
-                if (luxRooms != null)
-                    foreach (var room in luxRooms)
-                    {
-                        myObjects.Add(new Room()
-                        {
-                            HotelName = hotel.getName(),
-                            Stars = hotel.getStars(),
-                            Number = room.getNumber(),
-                            Rooms = room.getRoomsAmount(),
-                            Beds = room.getBeds(),
-                            Windows = room.getWindows(),
-                            Square = room.getSquare(),
-                            Appliances = room.hasHouseholdAppliances(),
-                            Price = room.getPrice()
-                        });
-                    }
-            }
-            this.listOfRooms.ItemsSource = myObjects;
-
+            myObjects = displayList(list,listOfRooms, myObjects);
+            allHotels.addHotels(list);
+            
+            listOfRooms.ItemsSource = myObjects;
+            allObjects = new ObservableCollection<Room>();
+            allObjects = myObjects;
         }
 
         private void open_Click(object sender, RoutedEventArgs e)
@@ -192,50 +205,7 @@ namespace HotelManagement.Reservation
 
             List<Hotel> list = new List<Hotel>();
             list = fileManager.createList();
-            
-            var dg = listOfRooms;
-            myObjects = new ObservableCollection<Room>();
-
-            foreach (Hotel hotel in list)
-            {
-                List<StandartRoom> stRooms = hotel.getStandartRooms();
-                if (stRooms != null)
-                    foreach (var room in stRooms)
-                    {
-                        myObjects.Add(new Room()
-                        {
-                            HotelName = hotel.getName(),
-                            Stars = hotel.getStars(),
-                            Number = room.getNumber(),
-                            Rooms = room.getRoomsAmount(),
-                            Beds = room.getBeds(),
-                            Windows = room.getWindows(),
-                            Square = room.getSquare(),
-                            Appliances = room.hasHouseholdAppliances(),
-                            Price = room.getPrice()
-                        }) ; 
-                    }
-                List<LuxRoom> luxRooms = hotel.getLuxRooms();
-                if (luxRooms != null)
-                    foreach (var room in luxRooms)
-                    {
-                        myObjects.Add(new Room()
-                        {
-                            HotelName = hotel.getName(),
-                            Stars = hotel.getStars(),
-                            Number = room.getNumber(),
-                            Rooms = room.getRoomsAmount(),
-                            Beds = room.getBeds(),
-                            Windows = room.getWindows(),
-                            Square = room.getSquare(),
-                            Appliances = room.hasHouseholdAppliances(),
-                            Price = room.getPrice()
-                        });
-                    }
-            }
-            
-            this.listOfRooms.ItemsSource = myObjects;
-            
+            myObjects = displayList(list, listOfRooms, myObjects);
         }
         private void cm_save_Click(object sender, RoutedEventArgs e)
         {
@@ -337,12 +307,13 @@ namespace HotelManagement.Reservation
             }
             this.listOfRooms.ItemsSource = myObjects;
         }
+
         bool getStandart = false;
         bool getLux = false;
       
         
         private void Button_Click_2(object sender, RoutedEventArgs e)
-        {
+        { 
             DateTime userDateFrom = new DateTime() ;
             DateTime userDateTo = new DateTime();
             double userPriceFrom = 0;
@@ -374,7 +345,10 @@ namespace HotelManagement.Reservation
                 userStars = (int)(stars.Value / 2 + 1);
             }
 
-            myObjects.Clear();
+            if (myObjects.Count > 0)
+            {
+                myObjects.Clear();
+            }
             listOfRooms.Items.Refresh();
 
             if(checkboxSt.IsChecked == true)
@@ -551,6 +525,8 @@ namespace HotelManagement.Reservation
        
         private void Button_Click_3(object sender, RoutedEventArgs e)
         {
+          
+
             myObjects.Clear();
             listOfRooms.Items.Refresh();
             //6.Знаходження найпопулярнішого запиту в діапазоні заданих дат.
@@ -561,36 +537,18 @@ namespace HotelManagement.Reservation
             bool getLux = true;
             bool getStandart = true;
 
-            if (checkboxSt.IsChecked == true)
-            {
-                getStandart = true;
-            }
-            if (checkboxSt.IsChecked == false)
-            {
-                getStandart = false;
-            }
-            if (checkboxLx.IsChecked == false)
-            {
-                getLux = false;
-            }
-            if (checkboxLx.IsChecked == true)
-            {
-                getLux = true;
-            }
+            if (checkboxSt.IsChecked == true)getStandart = true;
+            if (checkboxSt.IsChecked == false) getStandart = false;
+            if (checkboxLx.IsChecked == false) getLux = false;
+            if (checkboxLx.IsChecked == true)getLux = true;
 
             if (dateFrom.SelectedDate != null)
             {
                 userDateFrom = dateFrom.SelectedDate.Value;
-                if (dateTo.SelectedDate != null)
-                {
-                    userDateTo = dateTo.SelectedDate.Value;
-                }
-                else
-                {
-                    userDateTo = userDateFrom; 
-                }
+                if (dateTo.SelectedDate != null)userDateTo = dateTo.SelectedDate.Value;
+                else userDateTo = userDateFrom; 
+
             }
-           
 
             bool isReservedStandart = false;
             bool isReservedLux = false;
@@ -598,10 +556,11 @@ namespace HotelManagement.Reservation
             if (getStandart == true)
             {
 
-                StandartRoom bestStRoom = allHotels.getBestStRoom();
+                StandartRoom bestStRoom = new StandartRoom();
+                bestStRoom = allHotels.getBestStRoom();
                 isReservedStandart = checkStandartReservation(bestStRoom, userDateFrom, userDateTo);
 
-                if (isReservedStandart == false)
+                if (isReservedStandart == false && bestStRoom.getNumber()!=0)
                 {
                     String name = "";
                     int stars = 0;
@@ -627,11 +586,13 @@ namespace HotelManagement.Reservation
                         Square = bestStRoom.getSquare(),
                         Appliances = bestStRoom.hasHouseholdAppliances(),
                         Price = bestStRoom.getPrice()
-                    }); ;
+                    }) ; ;
                 }
-                else
+                else if(isReservedStandart == true || bestStRoom.getNumber() == 0)
                 {
+                   
                     List<StandartRoom> stPropositions = allHotels.getStandartProposition();
+                    
                     foreach (var room in stPropositions)
                     {
                         isReservedStandart = checkStandartReservation(room, userDateFrom, userDateTo);
@@ -672,7 +633,7 @@ namespace HotelManagement.Reservation
                 LuxRoom bestLuxRoom = allHotels.getBestLuxRoom();
                 isReservedLux = checkLuxReservation(bestLuxRoom, userDateFrom, userDateTo);
 
-                if (isReservedLux == false)
+                if (isReservedLux == false && bestLuxRoom.getNumber() != 0)
                 {
                     String name = "";
                     int stars = 0;
@@ -700,7 +661,7 @@ namespace HotelManagement.Reservation
                         Price = bestLuxRoom.getPrice()
                     });
                 }
-                else
+                else if(isReservedLux == true || bestLuxRoom.getNumber() == 0)
                 {
                     List<LuxRoom> luxPropositions = allHotels.getLuxProposition();
                     foreach (var room in luxPropositions)
@@ -745,8 +706,22 @@ namespace HotelManagement.Reservation
         private void Button_Click_4(object sender, RoutedEventArgs e)
         {
             CustomersInfo customersInfo = new CustomersInfo();
-            this.Hide();
             customersInfo.Show();
+        }
+
+        private void addNumber(object sender, RoutedEventArgs e)
+        {
+            NewRoom nRoom = new NewRoom();
+            nRoom.ShowDialog();
+            List<Hotel> list = new List<Hotel>();
+
+            if (nRoom.Visibility == Visibility.Hidden)
+            {
+                myObjects.Clear();
+                listOfRooms.Items.Refresh();
+                list = allHotels.getListOfHotels();
+                myObjects = displayList(list, listOfRooms, myObjects);
+            }
         }
     }
     }

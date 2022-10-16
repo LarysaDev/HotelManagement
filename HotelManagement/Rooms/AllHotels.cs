@@ -72,12 +72,13 @@ namespace HotelManagement.Rooms
                 }
             }
             return bestRoom;
+           
         }
         public LuxRoom getBestLuxRoom()
         {
             List<LuxRoom> list = new List<LuxRoom>();
             LuxRoom bestRoom = new LuxRoom();
-            foreach (var hotel in AllHotels.getListOfHotels())
+             foreach (var hotel in AllHotels.getListOfHotels())
             {
                 list.Add(hotel.getBestLuxRoom());
             }
@@ -90,6 +91,7 @@ namespace HotelManagement.Rooms
                 }
             }
             return bestRoom;
+       
         }
         public List<StandartRoom> getStandartProposition() {
             List<StandartRoom> list = new List<StandartRoom>();

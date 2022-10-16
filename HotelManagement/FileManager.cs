@@ -28,13 +28,19 @@ namespace HotelManagement
         }
         public List<Hotel> createList()
         {
+            Singleton_AllHotels allHotels = Singleton_AllHotels.AllHotels;
+
             List<Hotel> list = new List<Hotel>();
+            List<LuxRoom> stRooms = new List<LuxRoom>();
+            List<LuxRoom> luxRooms = new List<LuxRoom>();
             String[] lines = System.IO.File.ReadAllLines(path);
             String header = "";
+            int index = 0;
+            Hotel? hotel1 = new Hotel();
             foreach (var line in lines)
             {
                 String[] wordsArr = line.Split(' ').ToArray();
-                Hotel hotel1 = new Hotel() ;
+                
                 if (line.StartsWith("hotel")) header = line;
                 else if (wordsArr[0].StartsWith("1"))
                 {
@@ -44,7 +50,7 @@ namespace HotelManagement
                     int windows = System.Convert.ToInt32(wordsArr[3]);
                     double square = System.Convert.ToDouble(wordsArr[4]);
                     double price = System.Convert.ToDouble(wordsArr[5]);
-                    hotel1.addRoom(new StandartRoom(
+                    hotel1.addRoom(new LuxRoom(
                         numberOfRoom, rooms, beds, windows, square, price
                     ));
 
@@ -64,7 +70,11 @@ namespace HotelManagement
                 String[] data = header.Split(' ');
                 hotel1.setName(data[1]);
                 hotel1.setStars(System.Convert.ToInt32(data[2]));
-                list.Add(hotel1);
+                index++;
+                if (index != lines.Length && lines[index].StartsWith("hotel")){ 
+                    list.Add(hotel1);
+                    hotel1 = new Hotel();
+                }
             }
             return list;
         }

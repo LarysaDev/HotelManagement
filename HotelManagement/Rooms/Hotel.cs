@@ -5,6 +5,7 @@ using System.DirectoryServices;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Documents;
 
 namespace HotelManagement.Rooms
 {
@@ -12,9 +13,8 @@ namespace HotelManagement.Rooms
     {
         public string name { get; set; }
         public int starsAmount { get; set; }
-        protected List<StandartRoom> standartRooms = new List<StandartRoom>(50);
-        protected List<LuxRoom> luxRooms = new List<LuxRoom>(50);
-
+        protected List<StandartRoom> standartRooms = new List<StandartRoom>(1);
+        protected List<LuxRoom> luxRooms = new List<LuxRoom>(1);
         protected int peopleLivingInStandart = 0;
         protected int peopleLivingInLux = 0;
         public Hotel()
@@ -38,7 +38,7 @@ namespace HotelManagement.Rooms
             standartRooms.Add(room);    
         }
         public void bookStandartRoom(
-            StandartRoom room,
+            LuxRoom room,
             Customer customer, 
             DateTime dateFrom,
             DateTime dateTo)
@@ -73,8 +73,9 @@ namespace HotelManagement.Rooms
             return luxRooms;
         }
         public int getStars() { return starsAmount; }
+
         public StandartRoom getBestStandartRoom() {
-            List<StandartRoom> list = new List<StandartRoom>(20);
+            List<LuxRoom> list = new List<LuxRoom>();
             StandartRoom bestRoom = new StandartRoom();
             int bookings = 0;
             foreach (var room in this.getStandartRooms())
@@ -116,7 +117,7 @@ namespace HotelManagement.Rooms
         public List<LuxRoom> luxProposition()
         {
             List<LuxRoom> list = new List<LuxRoom>();
-            StandartRoom bestRoom = new StandartRoom();
+            LuxRoom bestRoom = new LuxRoom();
             foreach (var room in this.getLuxRooms())
             {
                 if (room.getBookedDays().Count > 0)

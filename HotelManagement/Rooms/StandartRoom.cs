@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace HotelManagement.Rooms
 {
-    public class StandartRoom 
+    public class StandartRoom
     {
         protected bool isReserved = false;
         protected int numberOfRoom;

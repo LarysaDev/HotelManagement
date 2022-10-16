@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET6_0;NETCOREAPP
 C:\Users\HP\source\repos\HotelManagement\HotelManagement\App.xaml
-5-2092588774
+6876708930
 
-17-931668138
+18-1684331342
 194-1103864946
-BookingForm\BookingWindow.xaml;Customers\CustomersInfo.xaml;MainWindow.xaml;Reservation\ReservationWindow.xaml;Rooms\RoomsInfo.xaml;
+BookingForm\BookingWindow.xaml;Customers\CustomersInfo.xaml;MainWindow.xaml;Reservation\NewRoom.xaml;Reservation\ReservationWindow.xaml;Rooms\RoomsInfo.xaml;
 
-True
+False
 

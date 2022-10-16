@@ -34,7 +34,7 @@ namespace HotelManagement
 
         public void fillHotelsData(Singleton_AllHotels allHotels, Singleton_AllCustomers allCustomers)
         {
-
+/*
             List<Hotel> hotelSet = new List<Hotel>(6);
 
             Hotel hotel1 = new Hotel("George", 1);
@@ -124,7 +124,7 @@ namespace HotelManagement
             customer5.reserveLuxRoom(room4, new DateTime(2022, 12, 02), new DateTime(2022, 12, 04));
             customer6.reserveStandartRoom(room5, new DateTime(2022, 11, 17), new DateTime(2022, 11, 23));
             customer1.reserveStandartRoom(room1, new DateTime(2022, 11, 26), new DateTime(2022, 11, 28));
-
+*/
         }
 
         public void fillCustomersData(Singleton_AllCustomers allCustomers)
@@ -136,7 +136,7 @@ namespace HotelManagement
             Singleton_AllHotels allHotels = Singleton_AllHotels.AllHotels;
             Singleton_AllCustomers allCustomers = Singleton_AllCustomers.AllCustomers;
             InitializeComponent();
-            fillHotelsData(allHotels, allCustomers);
+          //  fillHotelsData(allHotels, allCustomers);
         }
         private void Button_Click(object sender, RoutedEventArgs e)
         {
