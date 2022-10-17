@@ -31,18 +31,20 @@ namespace HotelManagement.Reservation
 
         private void submitBtn_Click(object sender, RoutedEventArgs e)
         {
-            if(addToExisting.IsChecked == true)
+            Hotel hotel;
+            int numberOfRoom = System.Convert.ToInt32(number.Text);
+            int rooms = System.Convert.ToInt32(roomsAmount.Text);
+            int beds = System.Convert.ToInt32(bedsAmount.Text);
+            int windows = System.Convert.ToInt32(windowsAmount.Text);
+            double square = System.Convert.ToDouble(square_.Text);
+            double price = System.Convert.ToDouble(price_.Text);
+
+            if (addToExisting.IsChecked == true)
             {
-                Hotel hotel = new Hotel();
+                hotel = new Hotel();
                 foreach (var hotel1 in allHotels.getListOfHotels()) {
                     if (hotel1.name == nameField.Text) hotel = hotel1;
                  }
-                int numberOfRoom = System.Convert.ToInt32(number.Text);
-                int rooms = System.Convert.ToInt32(roomsAmount.Text);
-                int beds = System.Convert.ToInt32(bedsAmount.Text);
-                int windows = System.Convert.ToInt32(windowsAmount.Text);
-                double square = System.Convert.ToDouble(square_.Text);
-                double price = System.Convert.ToDouble(price_.Text);
                 if (number.Text.StartsWith("1"))
                 {
                     hotel.addRoom(new StandartRoom( numberOfRoom, rooms, beds, windows, square, price ));
@@ -52,7 +54,16 @@ namespace HotelManagement.Reservation
             }
             } else if(addToNew.IsChecked == true)
             {
-
+                hotel = new Hotel(nameField.Text, System.Convert.ToInt32(stars_.Text));
+                if (number.Text.StartsWith("1"))
+                {
+                    hotel.addRoom(new StandartRoom(numberOfRoom, rooms, beds, windows, square, price));
+                }
+                else if (number.Text.StartsWith("2"))
+                {
+                    hotel.addLuxRoom(new LuxRoom(numberOfRoom, rooms, beds, windows, square, price));
+                }
+                allHotels.addHotel(hotel);
             }
             this.Hide();
         }

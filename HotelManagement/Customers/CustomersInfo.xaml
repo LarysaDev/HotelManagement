@@ -14,7 +14,7 @@
                     <MenuItem Header="_Open" />
                     <MenuItem Header="_Save" />
                     <Separator />
-                    <MenuItem Header="_Exit" />
+                    <MenuItem Header="_Exit" Click="cm_exit"/>
                 </MenuItem>
             </Menu>
             <TextBox AcceptsReturn="True" DockPanel.Dock="Top" Height="466" />
@@ -22,11 +22,20 @@
 
 
         </DockPanel>
-        <Button Content="Головна" Margin="10,26,654,415" Background="#FFFFFEC6" Foreground="#FF452E2E" BorderBrush="#FFF4FFD0" Click="Button_Click"/>
-        <Button Content="Кімнати" Margin="151,26,513,415" Background="#FFFFFBDA" Foreground="#FF452E2E" BorderBrush="White" Click="Button_Click_2"/>
-        <Button Content="Користувачі" Margin="292,26,372,415" Background="#FFFEFFA5" Foreground="#FF452E2E" BorderBrush="White" Click="Button_Click_1"/>
-        <Button Content="Резервація" Margin="433,26,231,415" Background="#FFF5FF89" Foreground="#FF452E2E" BorderBrush="White" Click="Button_Click_1"/>
-        <ComboBox x:Name="customerOption" Margin="329,109,276,326">
+        <Button Content="Головна" Margin="0,16,651,412" Background="#FFFFFEC6" Foreground="#FF452E2E" BorderBrush="#FFF4FFD0" Click="Button_Click" RenderTransformOrigin="0.5,0.5">
+            <Button.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform AngleY="0.221"/>
+                    <RotateTransform/>
+                    <TranslateTransform Y="0.263"/>
+                </TransformGroup>
+            </Button.RenderTransform>
+        </Button>
+        <Button Content="Кімнати" Margin="133,17,491,412" Background="#FFFFFEC6" Foreground="#FF452E2E" BorderBrush="White" Click="Button_Click_2"/>
+        <Button Content="Користувачі" Margin="264,17,307,412" Background="#FFFFFEC6" Foreground="#FF452E2E" BorderBrush="White" Click="Button_Click_1"/>
+        <Button Content="Резервація" Margin="426,17,189,412" Background="#FFFFFEC6" Foreground="#FF452E2E" BorderBrush="White" Click="Button_Click_12"/>
+        <ComboBox x:Name="customerOption" Margin="329,109,276,333">
             <ComboBoxItem>Найдовше проживання</ComboBoxItem>
             <ComboBoxItem>Кількість бронювань (>2)</ComboBoxItem>
             <ComboBoxItem IsSelected="True">Показати всіх</ComboBoxItem>
@@ -42,6 +51,7 @@
                 <DataGridTextColumn Header="Room" Width="90" Binding="{Binding Room}"/>
             </DataGrid.Columns>
         </DataGrid>
-        <Button x:Name="apply" Content="Застосувати" Margin="543,105,121,319" Background="#FFF5FF89" Foreground="#FF452E2E" BorderBrush="White" Click="Button1_Click_1"/>
+        <Button x:Name="apply" Content="Застосувати" Margin="543,105,121,333" Background="#FFFFFEC6" Foreground="#FF452E2E" BorderBrush="White" Click="Button1_Click_1"/>
+        <Button Content="" Margin="558,17,0,412" Background="#FFFFFEC6" Foreground="#FF452E2E" BorderBrush="White" />
     </Grid>
 </Window>

@@ -60,9 +60,7 @@ namespace HotelManagement.Customers
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            this.Hide();
-            ReservationWindow reservationWindow = new ReservationWindow();
-            reservationWindow.Show();
+           
         }
 
         private void Button1_Click_1(object sender, RoutedEventArgs e)
@@ -135,6 +133,16 @@ namespace HotelManagement.Customers
                     break;
             }
             this.listOfCustomers.ItemsSource = myCustomers;
+        }
+        private void cm_exit(object sender, RoutedEventArgs e)
+        {
+            System.Windows.Application.Current.Shutdown();
+        }
+            private void Button_Click_12(object sender, RoutedEventArgs e)
+        {
+            this.Hide();
+            ReservationWindow reservationWindow = new ReservationWindow();
+            reservationWindow.Show();
         }
     }
 

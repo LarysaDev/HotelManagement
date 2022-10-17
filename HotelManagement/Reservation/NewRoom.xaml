@@ -24,6 +24,8 @@
         <TextBox x:Name="square_" TextWrapping="Wrap" Text="" Margin="352,280,310,114" />
         <Label Content="Ціна" HorizontalAlignment="Left" Margin="520,249,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="price_" TextWrapping="Wrap" Text="" Margin="520,280,142,114" />
+        <Label Content="Зірки" HorizontalAlignment="Left" Margin="550,77,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="stars_" TextWrapping="Wrap" Text="" Margin="550,103,105,291"/>
 
     </Grid>
 </Window>
