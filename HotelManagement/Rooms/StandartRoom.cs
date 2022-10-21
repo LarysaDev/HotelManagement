@@ -10,21 +10,20 @@ namespace HotelManagement.Rooms
 {
     public class StandartRoom
     {
-        protected bool isReserved = false;
-        protected int numberOfRoom;
-        protected Customer customer;
-
-        protected int bedsAmount = 1;
-        protected int roomsAmount = 1;
-        protected int windows = 1;
-        protected double square;
-        protected bool hasAppliances = false;
-        protected double price;
-        protected List<DateTime> reservedDates = new List<DateTime>();
-        protected bool hasBreakfast = false;
-        protected bool hasBathroom = false;
-        protected bool dailyCleaning = false;
-        protected bool hasOwnBathroom = false;
+        private bool isReserved = false;
+        private int numberOfRoom;
+        private Customer customer;
+        private int bedsAmount = 1;
+        private int roomsAmount = 1;
+        private int windows = 1;
+        private double square;
+        private bool hasAppliances = false;
+        private double price;
+        private List<DateTime> reservedDates = new List<DateTime>();
+        private bool hasBreakfast = false;
+        private bool hasBathroom = false;
+        private bool dailyCleaning = false;
+        private bool hasOwnBathroom = false;
         public StandartRoom() { }
        
         public StandartRoom(
@@ -112,7 +111,7 @@ namespace HotelManagement.Rooms
         {
             return reservedDates;
         }
-        virtual public void setReserved(Customer customer, DateTime dateFrom, DateTime dateTo)
+         public void setReserved(Customer customer, DateTime dateFrom, DateTime dateTo)
         {
             reserveRoom(dateFrom, dateTo);
             

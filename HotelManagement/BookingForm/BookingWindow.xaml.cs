@@ -1,4 +1,5 @@
 ﻿using HotelManagement.Customers;
+using HotelManagement.Exceptions;
 using HotelManagement.Rooms;
 using System;
 using System.Collections.Generic;
@@ -29,17 +30,49 @@ namespace HotelManagement.BookingForm
         private void submitBtn_Click(object sender, RoutedEventArgs e)
         {
             Singleton_AllCustomers allCustomers = Singleton_AllCustomers.AllCustomers;
-            //int age;
-            // = System.Convert.ToInt32(ageField.Text);
-            Customer customer = new Customer(
-                nameField.Text,
-                lastnameField.Text,
-                emailField.Text,
-                phoneField.Text,
-                System.Convert.ToInt32(ageField.Text)
-                ) ;
-            allCustomers.addCustomer(customer);
-            this.Hide();
+            int age = 0;
+            String name = "", lastname="", email="", phone="";
+            Customer customer;
+            try
+            {
+                
+                if(ageField.Text.Length == 0)
+                {
+                    throw new EmptyInputException("Age");
+                } else age = System.Convert.ToInt32(ageField.Text);
+
+                if (nameField.Text.Length == 0)
+                {
+                    throw new EmptyInputException("Name");
+                }
+                else name = nameField.Text;
+
+                if (lastnameField.Text.Length == 0)
+                {
+                    throw new EmptyInputException("Lastname");
+                }
+                else lastname = lastnameField.Text;
+
+                if (emailField.Text.Length == 0)
+                {
+                    throw new EmptyInputException("Email");
+                }
+                else email = emailField.Text;
+
+                if (phoneField.Text.Length == 0)
+                {
+                    throw new EmptyInputException("Phone");
+                }
+                else phone = phoneField.Text;
+                customer = new Customer(name, lastname, email, phone, age);
+                allCustomers.addCustomer(customer);
+                this.Hide();
+            }
+            catch (EmptyInputException ex)
+            {
+                MessageBox.Show(ex.Message);
+            } 
+            
         }
     }
 }

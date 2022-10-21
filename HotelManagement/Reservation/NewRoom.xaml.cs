@@ -1,4 +1,6 @@
-﻿using HotelManagement.Rooms;
+﻿using HotelManagement.Customers;
+using HotelManagement.Exceptions;
+using HotelManagement.Rooms;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -13,6 +15,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Xml.Linq;
 using static HotelManagement.Reservation.ReservationWindow;
 
 namespace HotelManagement.Reservation
@@ -32,40 +35,88 @@ namespace HotelManagement.Reservation
         private void submitBtn_Click(object sender, RoutedEventArgs e)
         {
             Hotel hotel;
-            int numberOfRoom = System.Convert.ToInt32(number.Text);
-            int rooms = System.Convert.ToInt32(roomsAmount.Text);
-            int beds = System.Convert.ToInt32(bedsAmount.Text);
-            int windows = System.Convert.ToInt32(windowsAmount.Text);
-            double square = System.Convert.ToDouble(square_.Text);
-            double price = System.Convert.ToDouble(price_.Text);
+            int numberOfRoom = 0;
+            int rooms = 0;
+            int beds = 0;
+            int windows = 0;
+            double square = 0;
+            double price = 0;
 
-            if (addToExisting.IsChecked == true)
-            {
-                hotel = new Hotel();
-                foreach (var hotel1 in allHotels.getListOfHotels()) {
-                    if (hotel1.name == nameField.Text) hotel = hotel1;
-                 }
-                if (number.Text.StartsWith("1"))
+            try{
+
+                if (number.Text.Length == 0)
                 {
-                    hotel.addRoom(new StandartRoom( numberOfRoom, rooms, beds, windows, square, price ));
-                } else if(number.Text.StartsWith("2"))
-            {
-                hotel.addLuxRoom(new LuxRoom( numberOfRoom, rooms, beds, windows, square, price));
-            }
-            } else if(addToNew.IsChecked == true)
-            {
-                hotel = new Hotel(nameField.Text, System.Convert.ToInt32(stars_.Text));
-                if (number.Text.StartsWith("1"))
-                {
-                    hotel.addRoom(new StandartRoom(numberOfRoom, rooms, beds, windows, square, price));
+                    throw new EmptyInputException("Number of room");
                 }
-                else if (number.Text.StartsWith("2"))
+                else numberOfRoom = System.Convert.ToInt32(number.Text);
+
+                if (roomsAmount.Text.Length == 0)
                 {
-                    hotel.addLuxRoom(new LuxRoom(numberOfRoom, rooms, beds, windows, square, price));
+                    throw new EmptyInputException("Rooms amount");
                 }
-                allHotels.addHotel(hotel);
+                else rooms = System.Convert.ToInt32(roomsAmount.Text);
+
+                if (bedsAmount.Text.Length == 0)
+                {
+                    throw new EmptyInputException("Beds");
+                }
+                else beds = System.Convert.ToInt32(bedsAmount.Text);
+
+                if (windowsAmount.Text.Length == 0)
+                {
+                    throw new EmptyInputException("Windows");
+                }
+                else windows = System.Convert.ToInt32(windowsAmount.Text);
+
+                if (square_.Text.Length == 0)
+                {
+                    throw new EmptyInputException("Square");
+                }
+                else square = System.Convert.ToDouble(square_.Text);
+
+                if (price_.Text.Length == 0)
+                {
+                    throw new EmptyInputException("Price");
+                }
+                else price = System.Convert.ToDouble(price_.Text);
+
+
+                if (addToExisting.IsChecked == true)
+                {
+                    hotel = new Hotel();
+                    foreach (var hotel1 in allHotels.getListOfHotels())
+                    {
+                        if (hotel1.name == nameField.Text) hotel = hotel1;
+                    }
+                    if (number.Text.StartsWith("1"))
+                    {
+                        hotel.addRoom(new StandartRoom(numberOfRoom, rooms, beds, windows, square, price));
+                    }
+                    else if (number.Text.StartsWith("2"))
+                    {
+                        hotel.addLuxRoom(new LuxRoom(numberOfRoom, rooms, beds, windows, square, price));
+                    }
+                }
+                else if (addToNew.IsChecked == true)
+                {
+                    hotel = new Hotel(nameField.Text, System.Convert.ToInt32(stars_.Text));
+                    if (number.Text.StartsWith("1"))
+                    {
+                        hotel.addRoom(new StandartRoom(numberOfRoom, rooms, beds, windows, square, price));
+                    }
+                    else if (number.Text.StartsWith("2"))
+                    {
+                        hotel.addLuxRoom(new LuxRoom(numberOfRoom, rooms, beds, windows, square, price));
+                    }
+                    allHotels.addHotel(hotel);
+                }
+                this.Hide();
+
             }
-            this.Hide();
+            catch (EmptyInputException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }

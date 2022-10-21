@@ -9,14 +9,14 @@ namespace HotelManagement.Customers
 {
     public class Customer
     {
-        protected int age;
-        protected String firstName;
-        protected String lastName;
-        protected String email;
-        protected String phone;
-        protected List<int> reservedStandartRooms = new List<int>();
-        protected List<int> reservedLuxRooms = new List<int>();
-        protected List<int> daysOfLiving = new List<int>();
+        private int age;
+        private String firstName;
+        private String lastName;
+        private String email;
+        private String phone;
+        private List<int> reservedStandartRooms = new List<int>();
+        private List<int> reservedLuxRooms = new List<int>();
+        private List<int> daysOfLiving = new List<int>();
         public Customer() { }
 
         public Customer(

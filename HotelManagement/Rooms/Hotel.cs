@@ -13,14 +13,11 @@ namespace HotelManagement.Rooms
     {
         public string name { get; set; }
         public int starsAmount { get; set; }
-        protected List<StandartRoom> standartRooms = new List<StandartRoom>(1);
-        protected List<LuxRoom> luxRooms = new List<LuxRoom>(1);
-        protected int peopleLivingInStandart = 0;
-        protected int peopleLivingInLux = 0;
-        public Hotel()
-        {
-           
-        }
+        private List<StandartRoom> standartRooms = new List<StandartRoom>(1);
+        private List<LuxRoom> luxRooms = new List<LuxRoom>(1);
+        private int peopleLivingInStandart = 0;
+        private int peopleLivingInLux = 0;
+        public Hotel() {}
         public void setName(String name) { this.name = name; }
         public void setStars(int stars) { this.starsAmount = stars; }
         public String getName() { return this.name; }

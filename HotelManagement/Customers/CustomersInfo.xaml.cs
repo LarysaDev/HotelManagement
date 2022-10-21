@@ -23,15 +23,7 @@ namespace HotelManagement.Customers
     /// </summary>
     /// 
 
-    public class _Customer
-    {
-        public string Name { get; set; }
-        public string Lastname { get; set; }
-        public int Age { get; set; }
-        public string Phone { get; set; }
-        public string Email { get; set; }
-        public int Room { get; set; }
-    }
+    
     public partial class CustomersInfo : Window
     {
         Singleton_AllCustomers allCustomers = Singleton_AllCustomers.AllCustomers;

@@ -1,4 +1,6 @@
-﻿using HotelManagement.Rooms;
+﻿using HotelManagement.Exceptions;
+using HotelManagement.Reservation.DataGridRoomClass;
+using HotelManagement.Rooms;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -9,6 +11,7 @@ using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
+using System.Windows;
 using static HotelManagement.Reservation.ReservationWindow;
 
 namespace HotelManagement
@@ -25,6 +28,28 @@ namespace HotelManagement
         public void closeFile()
         {
             
+        }
+
+        public void openFile()
+        {
+            try
+            {
+                String filename = "";
+                Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+                dlg.DefaultExt = ".txt";
+                dlg.Filter = "Text files (*.txt)|*.txt";
+                Nullable<bool> result = dlg.ShowDialog();
+                if (result == true)
+                {
+                    filename = dlg.FileName;
+                    this.path = filename;
+                }
+                if (System.IO.File.ReadAllLines(path).Length == 0) throw new EmptyFileException("");
+            }
+            catch (EmptyFileException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
         public List<Hotel> createList()
         {
@@ -50,7 +75,7 @@ namespace HotelManagement
                     int windows = System.Convert.ToInt32(wordsArr[3]);
                     double square = System.Convert.ToDouble(wordsArr[4]);
                     double price = System.Convert.ToDouble(wordsArr[5]);
-                    hotel1.addRoom(new LuxRoom(
+                    hotel1.addRoom(new StandartRoom(
                         numberOfRoom, rooms, beds, windows, square, price
                     ));
 
@@ -104,30 +129,39 @@ namespace HotelManagement
            sw.Write(str);
            sw.Close();
         }
-        public void saveAs(String filename, ObservableCollection<Room> myObjects)
+        public void saveAs(ObservableCollection<Room> myObjects)
         {
-            StreamWriter sw = new StreamWriter(filename, false);
-            String[] lines = new string[myObjects.Count];
-            int i = 0;
-            String str = "";
-            foreach (var item in myObjects)
+            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+            dlg.DefaultExt = ".txt";
+            dlg.Filter = "Text files (*.txt)|*.txt";
+            Nullable<bool> result = dlg.ShowDialog();
+            if (result == true)
             {
-                str += "hotel ";
-                str += item.HotelName + " ";
-                str += item.Stars;
-                str += "\n";
-                str += item.Number + " ";
-                str += item.Rooms + " ";
-                str += item.Beds + " ";
-                str += item.Windows + " ";
-                str += item.Square + " ";
-                str += item.Price + " " + "\n";
-                lines[i] = str;
-                i++;
+                string filename = dlg.FileName;
 
+                StreamWriter sw = new StreamWriter(filename, false);
+                String[] lines = new string[myObjects.Count];
+                int i = 0;
+                String str = "";
+                foreach (var item in myObjects)
+                {
+                    str += "hotel ";
+                    str += item.HotelName + " ";
+                    str += item.Stars;
+                    str += "\n";
+                    str += item.Number + " ";
+                    str += item.Rooms + " ";
+                    str += item.Beds + " ";
+                    str += item.Windows + " ";
+                    str += item.Square + " ";
+                    str += item.Price + " " + "\n";
+                    lines[i] = str;
+                    i++;
+
+                }
+                sw.Write(str);
+                sw.Close();
             }
-            sw.Write(str);
-            sw.Close();
         }
     }
 }
