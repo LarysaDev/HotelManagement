@@ -133,7 +133,7 @@ namespace HotelManagement.Rooms
             double userPriceFrom, double userPriceTo
             )
         {
-            bool isInBudget = false;
+            bool isInBudget = true;
             bool isReserved = false;
             foreach (Hotel hotel in this.getFiltratedHotels(userStars))
             {
@@ -193,7 +193,7 @@ namespace HotelManagement.Rooms
             double userPriceFrom, double userPriceTo
             )
         {
-            bool isInBudget = false;
+            bool isInBudget = true;
             bool isReserved = false;
             foreach (Hotel hotel in this.getFiltratedHotels(userStars))
             {

@@ -226,7 +226,8 @@ namespace HotelManagement.Reservation
       
         
         private void Button_Click_2(object sender, RoutedEventArgs e)
-        { 
+        {
+
             DateTime userDateFrom = new DateTime() ;
             DateTime userDateTo = new DateTime();
             double userPriceFrom = 0;
@@ -244,51 +245,47 @@ namespace HotelManagement.Reservation
             if (priceFrom.Text != "")
             {
                 userPriceFrom = System.Convert.ToDouble(priceFrom.Text);
-                if (priceTo.Text != "")
-                {
-                    userPriceTo = System.Convert.ToDouble(priceTo.Text);
-                }
-                else
-                {
-
-                }
+                if (priceTo.Text != "")userPriceTo = System.Convert.ToDouble(priceTo.Text);
             }
             if(stars.Value != 0)
             {
                 userStars = (int)(stars.Value / 2 + 1);
             }
 
-            if (myObjects.Count > 0)
-            {
-                myObjects.Clear();
-            }
+            if (myObjects.Count > 0)myObjects.Clear();
+
             listOfRooms.Items.Refresh();
 
-            if(checkboxSt.IsChecked == true)
-            {
-                getStandart = true;
-            }
-            if(checkboxSt.IsChecked == false)
-            {
-                getStandart = false;
-            }
-            if (checkboxLx.IsChecked == false)
-            {
-                getLux = false;
-            }
-            if (checkboxLx.IsChecked == true)
-            {
-                getLux = true;
-            }
+            if(checkboxSt.IsChecked == true)getStandart = true;
+
+            if(checkboxSt.IsChecked == false)getStandart = false;
+         
+            if (checkboxLx.IsChecked == false)getLux = false;
+
+            if (checkboxLx.IsChecked == true)getLux = true;
+            String description = "";
             bool isReserved = false;
-            if(getStandart == true)
+            if (getStandart == true)
             {
-               myObjects =  allHotels.filtrateStandartRooms(myObjects, userStars, userDateFrom, userDateTo, dateFrom, dateTo, userPriceFrom, userPriceTo);
+                StandartRoom room = new StandartRoom();
+                if (userStars != 0)
+                {
+                    room.setRequirements(userStars);
+                    description += room.getDescription(userStars);
+                }
+                myObjects = allHotels.filtrateStandartRooms(myObjects, userStars, userDateFrom, userDateTo, dateFrom, dateTo, userPriceFrom, userPriceTo);
             }
-            if(getLux == true)
+            if (getLux == true)
             {
+                LuxRoom room = new LuxRoom();
+                if (userStars != 0)
+                {
+                    room.setRequirements(userStars);
+                    description += room.getDescription(userStars);
+                }
                 myObjects = allHotels.filtrateLuxRooms(myObjects, userStars, userDateFrom, userDateTo, dateFrom, dateTo, userPriceFrom, userPriceTo);
             }
+            infoAboutRoom.Text = description;
             }
 
         private void CheckBox_Checked(object sender, RoutedEventArgs e)

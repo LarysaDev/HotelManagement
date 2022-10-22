@@ -48,7 +48,7 @@
                 <ColumnDefinition Width="8*"/>
             </Grid.ColumnDefinitions>
 
-            <DataGrid Grid.Row="0" Grid.Column="1" AutoGenerateColumns="False" CanUserAddRows="False" x:Name="listOfRooms" Margin="64,200,40,42" Grid.RowSpan="3">
+            <DataGrid Grid.Row="0" Grid.Column="1" AutoGenerateColumns="False" CanUserAddRows="False" x:Name="listOfRooms" Margin="64,161,40,30" Grid.RowSpan="2">
                 <DataGrid.ContextMenu>
                     <ContextMenu Name="cm">
                         <MenuItem Header="Open" Click="cm_open_Click"/>
@@ -71,10 +71,11 @@
 
             <CheckBox x:Name="checkboxSt" Content="Стандарт" IsChecked="True" HorizontalAlignment="Left" Margin="29,265,0,0" VerticalAlignment="Top" Height="19" Checked="CheckBox_Checked_1"/>
             <CheckBox x:Name="checkboxLx" Content="Люкс" IsChecked="True" HorizontalAlignment="Left" Margin="29,284,0,0" VerticalAlignment="Top" Height="19" Checked="CheckBox_Checked_2"/>
+            <TextBox x:Name="infoAboutRoom" Grid.Column="1" HorizontalAlignment="Left" Height="81" Margin="64,10,0,0" Grid.Row="2" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="544" Grid.RowSpan="2"/>
         </Grid>
-        <Button x:Name="findRooms" Content="Шукати вільні номери" Margin="224,132,450,299" Background="#FFFFFBDA" Foreground="#FF452E2E" BorderBrush="White" Click="Button_Click_2"/>
-        <Button Content="Бронювати обраний номер" Margin="577,416,35,10" Background="#FFFFFEC6" Foreground="#FF452E2E" BorderBrush="#FFF4FFD0" Click="Button_Click"/>
-        <Button Content="Найпопулярніший запит за обраною датою" Margin="365,132,187,297" Background="#FFFFFBDA" Foreground="#FF452E2E" BorderBrush="White" Click="Button_Click_3"/>
+        <Button x:Name="findRooms" Content="Шукати номер" Margin="224,106,484,328" Background="#FFFFFBDA" Foreground="#FF452E2E" BorderBrush="White" Click="Button_Click_2"/>
+        <Button Content="Бронювати обраний номер" Margin="600,106,44,329" Background="#FFFFFEC6" Foreground="#FF452E2E" BorderBrush="#FFF4FFD0" Click="Button_Click"/>
+        <Button Content="Найпопулярніший запит" Margin="331,106,315,328" Background="#FFFFFBDA" Foreground="#FF452E2E" BorderBrush="White" Click="Button_Click_3"/>
 
         <Label x:Name="priceTitle" Content="Оберіть ціновий діапазон" Margin="20,374,616,27"/>
         <TextBox x:Name="priceFrom" TextWrapping="Wrap" Text="" Margin="26,405,725,39"/>
@@ -104,6 +105,6 @@
                 </TransformGroup>
             </Button.RenderTransform>
         </Button>
-        <Button Content="Додати номер" Margin="477,416,238,10" Background="#FFFFFEC6" Foreground="#FF452E2E" BorderBrush="#FFF4FFD0" Click="addNumber"/>
+        <Button Content="Додати номер" Margin="500,106,215,329" Background="#FFFFFEC6" Foreground="#FF452E2E" BorderBrush="#FFF4FFD0" Click="addNumber"/>
     </Grid>
 </Window>

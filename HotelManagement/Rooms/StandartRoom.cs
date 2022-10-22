@@ -8,24 +8,9 @@ using System.Threading.Tasks;
 
 namespace HotelManagement.Rooms
 {
-    public class StandartRoom
+    public class StandartRoom : RoomTemplate
     {
-        private bool isReserved = false;
-        private int numberOfRoom;
-        private Customer customer;
-        private int bedsAmount = 1;
-        private int roomsAmount = 1;
-        private int windows = 1;
-        private double square;
-        private bool hasAppliances = false;
-        private double price;
-        private List<DateTime> reservedDates = new List<DateTime>();
-        private bool hasBreakfast = false;
-        private bool hasBathroom = false;
-        private bool dailyCleaning = false;
-        private bool hasOwnBathroom = false;
         public StandartRoom() { }
-       
         public StandartRoom(
             int numberOfRoom,
             int rooms,
@@ -33,7 +18,7 @@ namespace HotelManagement.Rooms
             int windows,
             double square,
             double price
-            ) 
+            )
         {
             this.numberOfRoom = numberOfRoom;
             roomsAmount = rooms;
@@ -42,9 +27,9 @@ namespace HotelManagement.Rooms
             this.square = square;
             this.price = price;
         }
-
-        virtual public void setRequirements(int stars)
+        public override void setRequirements(int stars)
         {
+
             switch (stars)
             {
                 case 1:
@@ -60,7 +45,7 @@ namespace HotelManagement.Rooms
                     hasOwnBathroom = true;
                     hasAppliances = true;
                     hasBreakfast = true;
-                    dailyCleaning=true;
+                    dailyCleaning = true;
                     roomsAmount = 2;
                     break;
                 case 4:
@@ -80,59 +65,19 @@ namespace HotelManagement.Rooms
                 default: break;
             }
         }
-        public int getWindows() { return windows; }
-        public double getSquare() { return square; }
-        public int getRoomsAmount() { return roomsAmount; }
-        public int getBeds() { return bedsAmount; }
-        public bool hasHouseholdAppliances() { return hasAppliances; }
-        public double getPrice() { return price; }
-        public List<DateTime> bookedDates() { return reservedDates; }
-        virtual public void reserveRoom(DateTime from, DateTime dateTo)
+        public override string getDescription(int stars)
         {
-            for (var day = from.Date; day.Date <= dateTo.Date; day = day.AddDays(1))
-                reservedDates.Add(day);
-        }
-        public bool checkIfReserved(DateTime from, DateTime dateTo)
-        {
-            int index = 0;
-            bool status = false;
-            List<DateTime> newList = new List<DateTime>();
-            for (var day = from.Date; day.Date <= dateTo.Date; day = day.AddDays(1))
-            {
-                newList.Add(day);   
-            }
-            foreach(var day in newList)
-            {
-                if (this.bookedDates().Contains(day)) { status = true; break; }
-            }    
-            return status;
-        }
-        public List<DateTime> getBookedDays()
-        {
-            return reservedDates;
-        }
-         public void setReserved(Customer customer, DateTime dateFrom, DateTime dateTo)
-        {
-            reserveRoom(dateFrom, dateTo);
-            
-        }
-        virtual public String  getAppliances()
-        {
-            return "Фен та міні косметика";
-        }
-        
-        public int getNumber()
-        {
-            return this.numberOfRoom;
-        } 
-
-        public bool isAffordable(double priceFrom, double priceTo)
-        {
-            return (this.price >= priceFrom && this.price <= priceTo);
-        }
-       public bool isReservedRoom()
-        {
-            return isReserved;
+            String description = "Стандартний номер з кількістю зірок: " + stars +" \n";
+            if (hasAppliances == true)
+                description += "У кімнаті наявна деяка побутова техніка.";
+            if(hasOwnBathroom == true)
+                description += "Також у кімнаті є окрема ванна кімната.";
+             else description += "Також є окрема ванна кімната.";
+            if(hasBreakfast == true)
+                description += "Передбачений сніданок, що входить у вартість.";
+            if(dailyCleaning == true)
+                description += "Також можете не турбуватися про чистоту, адже в вартість також входить клінінг.";
+            return description;
         }
     }
 }
