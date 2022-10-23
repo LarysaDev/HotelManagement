@@ -18,14 +18,15 @@ namespace HotelManagement.Rooms
         private int peopleLivingInStandart = 0;
         private int peopleLivingInLux = 0;
         public Hotel() {}
-        public void setName(String name) { this.name = name; }
-        public void setStars(int stars) { this.starsAmount = stars; }
-        public String getName() { return this.name; }
         public Hotel(string name, int starsAmount)
         {
             this.name = name;
             this.starsAmount = starsAmount;
         }
+        public void setName(String name) { this.name = name; }
+        public void setStars(int stars) { this.starsAmount = stars; }
+        public String getName() { return this.name; }
+        
         public void addRooms(List<StandartRoom> rooms) 
         {
             this.standartRooms = rooms;

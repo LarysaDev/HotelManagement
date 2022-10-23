@@ -11,7 +11,6 @@ namespace HotelManagement.Rooms
     {
         protected  bool isReserved = false;
         protected int numberOfRoom;
-        protected Customer customer;
         protected int bedsAmount = 1;
         protected int roomsAmount = 1;
         protected int windows = 1;
@@ -51,7 +50,7 @@ namespace HotelManagement.Rooms
         public bool hasHouseholdAppliances() { return hasAppliances; }
         public double getPrice() { return price; }
         public List<DateTime> bookedDates() { return reservedDates; }
-        virtual public void reserveRoom(DateTime from, DateTime dateTo)
+        public void reserveRoom(DateTime from, DateTime dateTo)
         {
             for (var day = from.Date; day.Date <= dateTo.Date; day = day.AddDays(1))
                 reservedDates.Add(day);
@@ -80,7 +79,7 @@ namespace HotelManagement.Rooms
             reserveRoom(dateFrom, dateTo);
 
         }
-        virtual public String getAppliances()
+        public String getAppliances()
         {
             return "Фен та міні косметика";
         }

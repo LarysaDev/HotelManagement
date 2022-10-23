@@ -13,8 +13,6 @@ using System.Windows.Documents;
 
 namespace HotelManagement.Rooms
 {
-
-   
     public class Singleton_AllHotels
     {
         protected List<Hotel> hotels;

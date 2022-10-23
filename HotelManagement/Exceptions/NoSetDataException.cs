@@ -15,15 +15,9 @@ namespace HotelManagement.Exceptions
         private string strInput;
         public string ExtraErrorInfo
         {
-            get
-            {
-                return strInput;
-            }
+            get { return strInput; }
 
-            set
-            {
-                strInput = value;
-            }
+            set { strInput = value; }
         }
     }
 }

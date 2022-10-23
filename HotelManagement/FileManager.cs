@@ -25,11 +25,7 @@ namespace HotelManagement
         {
             this.path = path;
         }
-        public void closeFile()
-        {
-            
-        }
-
+      
         public void openFile()
         {
             try
@@ -53,10 +49,8 @@ namespace HotelManagement
         }
         public List<Hotel> createList()
         {
-            Singleton_AllHotels allHotels = Singleton_AllHotels.AllHotels;
-
             List<Hotel> list = new List<Hotel>();
-            List<LuxRoom> stRooms = new List<LuxRoom>();
+            List<StandartRoom> stRooms = new List<StandartRoom>();
             List<LuxRoom> luxRooms = new List<LuxRoom>();
             String[] lines = System.IO.File.ReadAllLines(path);
             String header = "";

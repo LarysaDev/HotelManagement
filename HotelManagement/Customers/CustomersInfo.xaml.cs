@@ -18,12 +18,7 @@ using static HotelManagement.Reservation.ReservationWindow;
 
 namespace HotelManagement.Customers
 {
-    /// <summary>
-    /// Interaction logic for CustomersInfo.xaml
-    /// </summary>
-    /// 
 
-    
     public partial class CustomersInfo : Window
     {
         Singleton_AllCustomers allCustomers = Singleton_AllCustomers.AllCustomers;
