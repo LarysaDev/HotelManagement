@@ -1,4 +1,5 @@
 ﻿using HotelManagement.Reservation;
+using HotelManagement.Reservation.DataGridRoomClass;
 using HotelManagement.Rooms;
 using System;
 using System.Collections.Generic;
@@ -48,6 +49,25 @@ namespace HotelManagement.Customers
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
            
+        }
+        FileManager fileManager = new FileManager();
+        private void cm_open_Click(object sender, RoutedEventArgs e)
+        {
+            fileManager.openFile();
+            this.listOfCustomers.ItemsSource = myCustomers;
+        }
+
+        
+        private void cm_save_Click(object sender, RoutedEventArgs e)
+        {
+        }
+        private void cm_paste_Click(object sender, RoutedEventArgs e)
+        {
+            Clipboard.GetText();
+        }
+      
+        private void cm_saveAs_Click(object sender, RoutedEventArgs e)
+        {
         }
 
         private void Button1_Click_1(object sender, RoutedEventArgs e)

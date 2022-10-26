@@ -41,11 +41,12 @@ namespace HotelManagement.Reservation
      
         ObservableCollection<Room> myObjects;
         ObservableCollection<Room> allObjects;
+        Singleton_AllCustomers allCustomers = Singleton_AllCustomers.AllCustomers;
         public ReservationWindow()
         {
             InitializeComponent();
             Singleton_AllHotels allHotels = Singleton_AllHotels.AllHotels;
-            Singleton_AllCustomers allCustomers = Singleton_AllCustomers.AllCustomers;
+           
         }
         private static ObservableCollection<Room> displayList(List<Hotel> list, DataGrid listOfRooms, ObservableCollection<Room> myObjects)
         {
@@ -96,67 +97,7 @@ namespace HotelManagement.Reservation
         }
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            try {
-
-                if (dateFrom.Text.Length > 0)
-                {
-
-
-                    BookingWindow bookingForm = new BookingWindow();
-                    bookingForm.ShowDialog();
-                    if (bookingForm.Visibility == Visibility.Hidden)
-                    {
-                        bookingForm.Close();
-                        DateTime userDateFrom = new DateTime();
-                        DateTime userDateTo = new DateTime();
-                        double userPriceFrom = 0;
-                        double userPriceTo = 0;
-                        int userStars = 0;
-
-                        if (dateFrom.SelectedDate != null)
-                        {
-                            userDateFrom = dateFrom.SelectedDate.Value;
-                            if (dateTo.SelectedDate != null)
-                                userDateTo = dateTo.SelectedDate.Value;
-                        }
-                        String value = "";
-                        foreach (Room room in listOfRooms.SelectedItems)
-                            value = System.Convert.ToString(room.Number);
-
-                        Singleton_AllCustomers allCustomers = Singleton_AllCustomers.AllCustomers;
-                        if (value.StartsWith("2"))
-                        {
-                            int roomN = System.Convert.ToInt32(value);
-                            LuxRoom room = new LuxRoom();
-                            foreach (var hotel in allHotels.getListOfHotels())
-                                foreach (var luxRoom in hotel.getLuxRooms())
-                                    if (luxRoom.getNumber() == roomN) room = luxRoom;
-
-                            allCustomers.getListOfCustomers()[allCustomers.getListOfCustomers().Count - 1].reserveLuxRoom(room, userDateFrom, userDateTo);
-                        }
-                        else
-                        {
-                            int roomN = System.Convert.ToInt32(value);
-                            StandartRoom room = new StandartRoom();
-                            foreach (var hotel in allHotels.getListOfHotels())
-                                foreach (var stRoom in hotel.getStandartRooms())
-                                    if (stRoom.getNumber() == roomN) room = stRoom;
-
-                            allCustomers.getListOfCustomers()[allCustomers.getListOfCustomers().Count - 1].reserveStandartRoom(room, userDateFrom, userDateTo);
-                        }
-
-                    }
-
-                }
-                else throw new NoSetDataException("");
-            
-            }
-            
-            catch(NoSetDataException ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-
+         
         }
 
         private void cm_open_Click(object sender, RoutedEventArgs e)
@@ -341,49 +282,11 @@ namespace HotelManagement.Reservation
             }
             return isReservedLux;
         }
-       
+
         private void Button_Click_3(object sender, RoutedEventArgs e)
         {
-         
-            myObjects.Clear();
-            listOfRooms.Items.Refresh();
-            //Знаходження найпопулярнішого запиту в діапазоні заданих дат.
-            // визначення за кількістю бронювань до цього часу та який вільний у заданому діапазоні дат
-            // альтернатива, якшо нема вільних варіантів
-            //беремо інші номери (стандарт + люкс), які мають кі-сть бронювань від 1 разу і які вільні у певні дати
-            DateTime userDateFrom = new DateTime();
-            DateTime userDateTo = new DateTime();
 
-            bool getLux = true;
-            bool getStandart = true;
-
-            if (checkboxSt.IsChecked == true)getStandart = true;
-            if (checkboxSt.IsChecked == false) getStandart = false;
-            if (checkboxLx.IsChecked == false) getLux = false;
-            if (checkboxLx.IsChecked == true)getLux = true;
-
-            try {
-                if (dateFrom.Text.Length > 0)
-                {
-                    userDateFrom = dateFrom.SelectedDate.Value;
-                    if (dateTo.SelectedDate != null) userDateTo = dateTo.SelectedDate.Value;
-                    else userDateTo = userDateFrom;
-
-                    bool isReservedStandart = false;
-                    bool isReservedLux = false;
-
-                    if (getStandart == true) myObjects = allHotels.getListOfBestStandartRooms(myObjects, userDateFrom, userDateTo, dateFrom, dateTo);
-                    if (getLux == true) myObjects = allHotels.getListOfBestLuxRooms(myObjects, userDateFrom, userDateTo, dateFrom, dateTo);
-                }
-                else throw new NoSetDataException("");
-            }
-            catch(NoSetDataException ex)
-            {
-                MessageBox.Show(ex.Message);
-            }   
-           
-
-        }   
+        }
         private void Button_Click_4(object sender, RoutedEventArgs e)
         {
             CustomersInfo customersInfo = new CustomersInfo();
@@ -404,6 +307,184 @@ namespace HotelManagement.Reservation
                 myObjects = displayList(list, listOfRooms, myObjects);
             }
         }
+
+        private void customerOption_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+          
+            }
+
+        private void selectOption(object sender, RoutedEventArgs e)
+        {
+            switch (customerOption.SelectedIndex)
+            {
+                case 0:
+                    myObjects.Clear();
+                    listOfRooms.Items.Refresh();
+                    //Знаходження найпопулярнішого запиту в діапазоні заданих дат.
+                    // визначення за кількістю бронювань до цього часу та який вільний у заданому діапазоні дат
+                    // альтернатива, якшо нема вільних варіантів
+                    //беремо інші номери (стандарт + люкс), які мають кі-сть бронювань від 1 разу і які вільні у певні дати
+                    DateTime userDateFrom = new DateTime();
+                    DateTime userDateTo = new DateTime();
+
+                    bool getLux = true;
+                    bool getStandart = true;
+
+                    if (checkboxSt.IsChecked == true) getStandart = true;
+                    if (checkboxSt.IsChecked == false) getStandart = false;
+                    if (checkboxLx.IsChecked == false) getLux = false;
+                    if (checkboxLx.IsChecked == true) getLux = true;
+
+                    try
+                    {
+                        if (dateFrom.Text.Length > 0)
+                        {
+                            userDateFrom = dateFrom.SelectedDate.Value;
+                            if (dateTo.SelectedDate != null) userDateTo = dateTo.SelectedDate.Value;
+                            else userDateTo = userDateFrom;
+
+                            bool isReservedStandart = false;
+                            bool isReservedLux = false;
+
+                            if (getStandart == true) myObjects = allHotels.getListOfBestStandartRooms(myObjects, userDateFrom, userDateTo, dateFrom, dateTo);
+                            if (getLux == true) myObjects = allHotels.getListOfBestLuxRooms(myObjects, userDateFrom, userDateTo, dateFrom, dateTo);
+                        }
+                        else throw new NoSetDataException("");
+                    }
+                    catch (NoSetDataException ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+                    break;
+                case 1:
+                    NewRoom nRoom = new NewRoom();
+                    nRoom.ShowDialog();
+                    List<Hotel> list = new List<Hotel>();
+
+                    if (nRoom.Visibility == Visibility.Hidden)
+                    {
+                        myObjects.Clear();
+                        listOfRooms.Items.Refresh();
+                        list = allHotels.getListOfHotels();
+                        myObjects = displayList(list, listOfRooms, myObjects);
+                    }
+                    break;
+                case 2:
+                    try
+                    {
+
+                        if (dateFrom.Text.Length > 0)
+                        {
+
+
+                            BookingWindow bookingForm = new BookingWindow();
+                            bookingForm.ShowDialog();
+                            if (bookingForm.Visibility == Visibility.Hidden)
+                            {
+                                bookingForm.Close();
+                                DateTime userDateFrom1 = new DateTime();
+                                DateTime userDateTo1 = new DateTime();
+                                double userPriceFrom = 0;
+                                double userPriceTo = 0;
+                                int userStars = 0;
+
+                                if (dateFrom.SelectedDate != null)
+                                {
+                                    userDateFrom1 = dateFrom.SelectedDate.Value;
+                                    if (dateTo.SelectedDate != null)
+                                        userDateTo1 = dateTo.SelectedDate.Value;
+                                }
+                                String value = "";
+                                foreach (Room room in listOfRooms.SelectedItems)
+                                    value = System.Convert.ToString(room.Number);
+
+                                Singleton_AllCustomers allCustomers = Singleton_AllCustomers.AllCustomers;
+                                if (value.StartsWith("2"))
+                                {
+                                    int roomN = System.Convert.ToInt32(value);
+                                    LuxRoom room = new LuxRoom();
+                                    foreach (var hotel in allHotels.getListOfHotels())
+                                        foreach (var luxRoom in hotel.getLuxRooms())
+                                            if (luxRoom.getNumber() == roomN) room = luxRoom;
+
+                                    allCustomers.getListOfCustomers()[allCustomers.getListOfCustomers().Count - 1].reserveLuxRoom(room, userDateFrom1, userDateTo1);
+                                }
+                                else
+                                {
+                                    int roomN = System.Convert.ToInt32(value);
+                                    StandartRoom room = new StandartRoom();
+                                    foreach (var hotel in allHotels.getListOfHotels())
+                                        foreach (var stRoom in hotel.getStandartRooms())
+                                            if (stRoom.getNumber() == roomN) room = stRoom;
+
+                                    allCustomers.getListOfCustomers()[allCustomers.getListOfCustomers().Count - 1].reserveStandartRoom(room, userDateFrom1, userDateTo1);
+                                }
+
+                            }
+
+                        }
+                        else throw new NoSetDataException("");
+
+                    }
+
+                    catch (NoSetDataException ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+                    break;
+
+                case 3:
+
+                    String data = "";
+                    String numberOfRoom = "";
+                    foreach (Room room in listOfRooms.SelectedItems)
+                        numberOfRoom = System.Convert.ToString(room.Number);
+                    StandartRoom stRoom1 = new StandartRoom();
+                    LuxRoom luxRoom1 = new LuxRoom();
+                   
+                        foreach(var hotel in allHotels.getListOfHotels())
+                        {
+                        if (numberOfRoom.StartsWith("1"))
+                        {
+                            foreach(var room in hotel.getStandartRooms())
+                            {
+                                if (room.getNumber() == Convert.ToInt32(numberOfRoom))
+                                {
+                                    stRoom1 = room;
+                                    foreach(var date in stRoom1.getBookedDays())
+                                    {
+                                        data += date + "\n";
+                                    }
+                                    break;
+                                };
+                            }
+                        }
+                        else if (numberOfRoom.StartsWith("2"))
+                        {
+                            foreach (var room in hotel.getLuxRooms())
+                            {
+                                if (room.getNumber() == Convert.ToInt32(numberOfRoom))
+                                {
+                                    luxRoom1 = room;
+                                    foreach (var date in luxRoom1.getBookedDays())
+                                    {
+                                        data += date + "\n";
+                                    }
+                                    break;
+                                };
+                            }
+                        }
+                    }
+                    infoAboutRoom.Text = data;
+                    break;
+
+                case 4:
+
+                    fileManager.openFile();
+                    fileManager.createListOfCustomers(allCustomers);
+                    break;
+            }
+    }
     }
     }
 

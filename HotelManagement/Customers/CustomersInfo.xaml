@@ -42,6 +42,13 @@
         </ComboBox>
         <Label Content="Показати користувачів за вказаним критерієм:" Margin="54,105,400,311"/>
         <DataGrid Grid.Row="0" Grid.Column="1" AutoGenerateColumns="False" CanUserAddRows="False" x:Name="listOfCustomers" Margin="64,200,40,42" Grid.RowSpan="3">
+            <DataGrid.ContextMenu>
+                <ContextMenu Name="cm">
+                    <MenuItem Header="Open" Click="cm_open_Click"/>
+                    <MenuItem Header="Save" Click="cm_save_Click"/>
+                    <MenuItem Header="SaveAs" Click="cm_saveAs_Click"/>
+                </ContextMenu>
+            </DataGrid.ContextMenu>
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Name" Width="120" Binding="{Binding Name}"/>
                 <DataGridTextColumn Header="Lastname" Width="120" Binding="{Binding Lastname}"/>

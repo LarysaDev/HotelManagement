@@ -74,9 +74,13 @@
             <TextBox x:Name="infoAboutRoom" Grid.Column="1" HorizontalAlignment="Left" Height="81" Margin="64,10,0,0" Grid.Row="2" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="544" Grid.RowSpan="2"/>
         </Grid>
         <Button x:Name="findRooms" Content="Шукати номер" Margin="224,106,484,328" Background="#FFFFFBDA" Foreground="#FF452E2E" BorderBrush="White" Click="Button_Click_2"/>
-        <Button Content="Бронювати обраний номер" Margin="600,106,44,329" Background="#FFFFFEC6" Foreground="#FF452E2E" BorderBrush="#FFF4FFD0" Click="Button_Click"/>
-        <Button Content="Найпопулярніший запит" Margin="331,106,315,328" Background="#FFFFFBDA" Foreground="#FF452E2E" BorderBrush="White" Click="Button_Click_3"/>
-
+        <ComboBox x:Name="customerOption" Margin="331,110,273,331" SelectionChanged="customerOption_SelectionChanged">
+            <ComboBoxItem  IsSelected="True">Найпопулярніший запит</ComboBoxItem>
+            <ComboBoxItem >Додати номер</ComboBoxItem>
+            <ComboBoxItem >Бронювати обраний номер</ComboBoxItem>
+            <ComboBoxItem >Переглянути бронювання номера</ComboBoxItem>
+            <ComboBoxItem >Заповнити бронювання з файлу</ComboBoxItem>
+        </ComboBox>
         <Label x:Name="priceTitle" Content="Оберіть ціновий діапазон" Margin="20,374,616,27"/>
         <TextBox x:Name="priceFrom" TextWrapping="Wrap" Text="" Margin="26,405,725,39"/>
         <TextBox x:Name="priceTo" TextWrapping="Wrap" Text="" Margin="114,405,638,39"/>
@@ -105,6 +109,6 @@
                 </TransformGroup>
             </Button.RenderTransform>
         </Button>
-        <Button Content="Додати номер" Margin="500,106,215,329" Background="#FFFFFEC6" Foreground="#FF452E2E" BorderBrush="#FFF4FFD0" Click="addNumber"/>
+        <Button Content="Застосувати" Margin="542,109,173,333" Background="#FFFFFEC6" Foreground="#FF452E2E" BorderBrush="#FFF4FFD0" Click="selectOption"/>
     </Grid>
 </Window>

@@ -1,4 +1,5 @@
-﻿using HotelManagement.Exceptions;
+﻿using HotelManagement.Customers;
+using HotelManagement.Exceptions;
 using HotelManagement.Reservation.DataGridRoomClass;
 using HotelManagement.Rooms;
 using System;
@@ -8,10 +9,14 @@ using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
 using System.Reflection.Emit;
+using System.Security.Cryptography.Xml;
 using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Documents;
+using System.Xml.Linq;
 using static HotelManagement.Reservation.ReservationWindow;
 
 namespace HotelManagement
@@ -25,6 +30,7 @@ namespace HotelManagement
         {
             this.path = path;
         }
+        public String getPath() { return path; }
       
         public void openFile()
         {
@@ -97,7 +103,72 @@ namespace HotelManagement
             }
             return list;
         }
-       
+       public void createListOfCustomers(Singleton_AllCustomers allCustomers)
+        {
+            Singleton_AllHotels allHotels = Singleton_AllHotels.AllHotels;
+            List<Customer> customers = new List<Customer>();
+            String[] lines = System.IO.File.ReadAllLines(path);
+            Customer customer = new Customer();
+            StandartRoom stRoom = new StandartRoom();
+            LuxRoom luxRoom = new LuxRoom();
+            char option = ' ';
+            foreach (var line in lines)
+            {
+                String[] wordsArr = line.Split(' ').ToArray();
+                DateTime dateTo = new DateTime();
+                DateTime dateFrom = new DateTime();
+                customer = new Customer(wordsArr[0], wordsArr[1], wordsArr[2], wordsArr[3], Convert.ToInt32(wordsArr[4]));
+                if (wordsArr.Length > 5)
+                {
+
+  
+                    String[] dateTimesFrom = wordsArr[6].Split('/').ToArray();
+                    dateFrom = new DateTime(Convert.ToInt32(dateTimesFrom[2]), Convert.ToInt32(dateTimesFrom[1]), Convert.ToInt32(dateTimesFrom[0]));
+                    if (wordsArr.Length > 6)
+                    {
+                        String[] dateTimesTo = wordsArr[7].Split('/').ToArray();
+                        dateTo = new DateTime(Convert.ToInt32(dateTimesTo[2]), Convert.ToInt32(dateTimesTo[1]), Convert.ToInt32(dateTimesTo[0]));
+                    }
+
+                    if (wordsArr[5].StartsWith("1"))
+                    {
+                        option = 's';
+                        foreach (var hotel in allHotels.getListOfHotels())
+                        {
+                            foreach (var room in hotel.getStandartRooms())
+                            {
+                                if (room.getNumber() == Convert.ToInt32(wordsArr[5])) stRoom = room; break;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        option = 'l';
+                        foreach (var hotel in allHotels.getListOfHotels())
+                        {
+                            foreach (var room in hotel.getLuxRooms())
+                            {
+                                if (room.getNumber() == Convert.ToInt32(wordsArr[5])) luxRoom = room; break;
+                            }
+                        }
+                    }
+                }
+                else option = ' ';
+                customers.Add(customer);
+                allCustomers.addCustomer(customer);
+
+                if (option == 's')
+                {
+                    allCustomers.getListOfCustomers().Where(x => x.getName() == customer.getName()).First().reserveStandartRoom(stRoom, dateFrom, dateTo);
+                    MessageBox.Show("The room " +  stRoom.getNumber() + "was reserved from "+ dateFrom+ "to " + dateTo);
+                }
+                else if (option == 'l')
+                    allCustomers.getListOfCustomers().Where(x => x.getName() == customer.getName()).First().reserveLuxRoom(luxRoom, dateFrom, dateTo);
+            }
+
+            return customers;
+        }
+    
         public void saveChangesToExistingFile(ObservableCollection<Room> myObjects)
         {
             StreamWriter sw = new StreamWriter(path, false);
