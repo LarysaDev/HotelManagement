@@ -42,81 +42,86 @@ namespace HotelManagement.Reservation
             double square = 0;
             double price = 0;
 
-            try{
-
-                if (number.Text.Length == 0)
+            try
+            {
+                if (addToExisting.IsChecked == true || addToNew.IsChecked == true)
                 {
-                    throw new EmptyInputException("Number of room");
-                }
-                else numberOfRoom = System.Convert.ToInt32(number.Text);
+                    if (number.Text.Length == 0) throw new EmptyInputException("Number of room");
+                    else numberOfRoom = System.Convert.ToInt32(number.Text);
 
-                if (roomsAmount.Text.Length == 0)
-                {
-                    throw new EmptyInputException("Rooms amount");
-                }
-                else rooms = System.Convert.ToInt32(roomsAmount.Text);
-
-                if (bedsAmount.Text.Length == 0)
-                {
-                    throw new EmptyInputException("Beds");
-                }
-                else beds = System.Convert.ToInt32(bedsAmount.Text);
-
-                if (windowsAmount.Text.Length == 0)
-                {
-                    throw new EmptyInputException("Windows");
-                }
-                else windows = System.Convert.ToInt32(windowsAmount.Text);
-
-                if (square_.Text.Length == 0)
-                {
-                    throw new EmptyInputException("Square");
-                }
-                else square = System.Convert.ToDouble(square_.Text);
-
-                if (price_.Text.Length == 0)
-                {
-                    throw new EmptyInputException("Price");
-                }
-                else price = System.Convert.ToDouble(price_.Text);
-
-
-                if (addToExisting.IsChecked == true)
-                {
-                    hotel = new Hotel();
-                    foreach (var hotel1 in allHotels.getListOfHotels())
+                    if (roomsAmount.Text.Length == 0)
                     {
-                        if (hotel1.name == nameField.Text) hotel = hotel1;
+                        throw new EmptyInputException("Rooms amount");
                     }
-                    if (number.Text.StartsWith("1"))
-                    {
-                        hotel.addRoom(new StandartRoom(numberOfRoom, rooms, beds, windows, square, price));
-                    }
-                    else if (number.Text.StartsWith("2"))
-                    {
-                        hotel.addLuxRoom(new LuxRoom(numberOfRoom, rooms, beds, windows, square, price));
-                    }
-                }
-                else if (addToNew.IsChecked == true)
-                {
-                    hotel = new Hotel(nameField.Text, System.Convert.ToInt32(stars_.Text));
-                    if (number.Text.StartsWith("1"))
-                    {
-                        hotel.addRoom(new StandartRoom(numberOfRoom, rooms, beds, windows, square, price));
-                    }
-                    else if (number.Text.StartsWith("2"))
-                    {
-                        hotel.addLuxRoom(new LuxRoom(numberOfRoom, rooms, beds, windows, square, price));
-                    }
-                    allHotels.addHotel(hotel);
-                }
-                this.Hide();
+                    else rooms = System.Convert.ToInt32(roomsAmount.Text);
 
+                    if (bedsAmount.Text.Length == 0)
+                    {
+                        throw new EmptyInputException("Beds");
+                    }
+                    else beds = System.Convert.ToInt32(bedsAmount.Text);
+
+                    if (windowsAmount.Text.Length == 0)
+                    {
+                        throw new EmptyInputException("Windows");
+                    }
+                    else windows = System.Convert.ToInt32(windowsAmount.Text);
+
+                    if (square_.Text.Length == 0)
+                    {
+                        throw new EmptyInputException("Square");
+                    }
+                    else square = System.Convert.ToDouble(square_.Text);
+
+                    if (price_.Text.Length == 0)
+                    {
+                        throw new EmptyInputException("Price");
+                    }
+                    else price = System.Convert.ToDouble(price_.Text);
+
+
+                    if (addToExisting.IsChecked == true)
+                    {
+                        hotel = new Hotel();
+                        foreach (var hotel1 in allHotels.getListOfHotels())
+                        {
+                            if (hotel1.name == nameField.Text) hotel = hotel1;
+                        }
+                        if (number.Text.StartsWith("1"))
+                        {
+                            hotel.addRoom(new StandartRoom(numberOfRoom, rooms, beds, windows, square, price));
+                        }
+                        else if (number.Text.StartsWith("2"))
+                        {
+                            hotel.addLuxRoom(new LuxRoom(numberOfRoom, rooms, beds, windows, square, price));
+                        }
+                        this.Hide();
+                    }
+                    else if (addToNew.IsChecked == true)
+                    {
+                        hotel = new Hotel(nameField.Text, System.Convert.ToInt32(stars_.Text));
+                        if (number.Text.StartsWith("1"))
+                        {
+                            hotel.addRoom(new StandartRoom(numberOfRoom, rooms, beds, windows, square, price));
+                        }
+                        else if (number.Text.StartsWith("2"))
+                        {
+                            hotel.addLuxRoom(new LuxRoom(numberOfRoom, rooms, beds, windows, square, price));
+                        }
+                        allHotels.addHotel(hotel);
+                        this.Hide();
+                    }
+                } else throw new NoCheckedOptionException("add to new or exsisting hotel?");
             }
             catch (EmptyInputException ex)
             {
                 MessageBox.Show(ex.Message);
             }
+            catch(NoCheckedOptionException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
+
     }
 }

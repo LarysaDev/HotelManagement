@@ -77,6 +77,21 @@ namespace HotelManagement.Customers
             }
             return lastBooked;
         }
+        public String getListOfReservedRooms()
+        {
+            String rooms = "";
+            if (this.getBookedStandartRooms().Count != 0)
+            {
+                foreach (var room in this.getBookedStandartRooms())
+                    rooms += room + ", ";
+            }
+            else if (this.getBookedLuxRooms().Count != 0)
+            {
+                foreach (var room in this.getBookedLuxRooms())
+                    rooms += room + ", ";
+            }
+            return rooms;
+        }
         public int getMaxDaysOfLiving()
         {
             int maxDays = 0;

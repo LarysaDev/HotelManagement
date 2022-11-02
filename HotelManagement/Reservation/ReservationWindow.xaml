@@ -82,7 +82,9 @@
             <ComboBoxItem >Заповнити бронювання з файлу</ComboBoxItem>
         </ComboBox>
         <Label x:Name="priceTitle" Content="Оберіть ціновий діапазон" Margin="20,374,616,27"/>
-        <TextBox x:Name="priceFrom" TextWrapping="Wrap" Text="" Margin="26,405,725,39"/>
+        <TextBox x:Name="priceFrom"  TextWrapping="Wrap" Text="" Margin="26,405,725,39">
+      
+        </TextBox>
         <TextBox x:Name="priceTo" TextWrapping="Wrap" Text="" Margin="114,405,638,39"/>
         <DatePicker x:Name="dateFrom" Margin="33,109,654,325"/>
         <DatePicker x:Name="dateTo" Margin="33,173,654,258"/>

@@ -9,7 +9,7 @@ namespace HotelManagement.Exceptions
     public class NoSetDataException : Exception
     {
         public NoSetDataException() : base() { }
-        public NoSetDataException(string input) : base(String.Format("Ви не обрали дату", input)) { }
+        public NoSetDataException(string input) : base(String.Format("Ви не обрали дату: {0}", input)) { }
         public NoSetDataException(string input, Exception innerException) : base(input, innerException) { }
 
         private string strInput;

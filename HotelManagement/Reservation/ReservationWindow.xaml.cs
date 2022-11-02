@@ -42,6 +42,7 @@ namespace HotelManagement.Reservation
         ObservableCollection<Room> myObjects;
         ObservableCollection<Room> allObjects;
         Singleton_AllCustomers allCustomers = Singleton_AllCustomers.AllCustomers;
+
         public ReservationWindow()
         {
             InitializeComponent();
@@ -97,7 +98,9 @@ namespace HotelManagement.Reservation
         }
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-         
+            MainWindow mainWindow = new MainWindow();
+            mainWindow.Show();
+            this.Hide();
         }
 
         private void cm_open_Click(object sender, RoutedEventArgs e)
@@ -105,21 +108,27 @@ namespace HotelManagement.Reservation
             List<Hotel> hotelSet = new List<Hotel>();
             List<LuxRoom> standartRooms1 = new List<LuxRoom>();
             List<LuxRoom> luxRooms1 = new List<LuxRoom>();  
-            fileManager.openFile();
-            List<Hotel> list = new List<Hotel>();
-            list = fileManager.createList();
-            myObjects = displayList(list,listOfRooms, myObjects);
-            allHotels.addHotels(list);
-            listOfRooms.ItemsSource = myObjects;
-            allObjects = new ObservableCollection<Room>();
+            int res = fileManager.openFile("hotel");
+            if (res == 0)
+            {
+                List<Hotel> list = new List<Hotel>();
+                list = fileManager.createList();
+                myObjects = displayList(list, listOfRooms, myObjects);
+                allHotels.addHotels(list);
+                listOfRooms.ItemsSource = myObjects;
+                allObjects = new ObservableCollection<Room>();
+            }
         }
 
         private void open_Click(object sender, RoutedEventArgs e)
         {
-            fileManager.openFile();
-            List<Hotel> list = new List<Hotel>();
-            list = fileManager.createList();
-            myObjects = displayList(list, listOfRooms, myObjects);
+            int res =  fileManager.openFile("booking");
+            if (res == 0)
+            {
+                List<Hotel> list = new List<Hotel>();
+                list = fileManager.createList();
+                myObjects = displayList(list, listOfRooms, myObjects);
+            }
         }
         private void cm_save_Click(object sender, RoutedEventArgs e)
         {

@@ -52,7 +52,7 @@ namespace HotelManagement.Customers
         }
         FileManager fileManager = new FileManager();
         private void cm_open_Click(object sender, RoutedEventArgs e)
-        {
+        {   
             fileManager.openFile();
             this.listOfCustomers.ItemsSource = myCustomers;
         }
@@ -69,6 +69,7 @@ namespace HotelManagement.Customers
         private void cm_saveAs_Click(object sender, RoutedEventArgs e)
         {
         }
+
 
         private void Button1_Click_1(object sender, RoutedEventArgs e)
         {
@@ -95,7 +96,7 @@ namespace HotelManagement.Customers
                         Age = customer1.getAge(),
                         Phone = customer1.getPhone(),
                         Email = customer1.getEmail(),
-                        Room = customer1.getLastBookedRoom()
+                        Room = customer1.getListOfReservedRooms()
                     });
 
                     break;
@@ -119,7 +120,7 @@ namespace HotelManagement.Customers
                         Age = customer2.getAge(),
                         Phone = customer2.getPhone(),
                         Email = customer2.getEmail(),
-                        Room = customer2.getLastBookedRoom()
+                        Room = customer2.getListOfReservedRooms()
                     });
                     break;
                 case 2:
@@ -127,6 +128,10 @@ namespace HotelManagement.Customers
                     listOfCustomers.Items.Refresh();
                     foreach (Customer customer in allCustomers.getListOfCustomers())
                     {
+                        int occurancy = 0;
+                        foreach (var item in myCustomers)
+                            if (item.Email == customer.getEmail()) occurancy++;
+                        if(occurancy == 0)
                         myCustomers.Add(new _Customer()
                         {
                             Name = customer.getName(),
@@ -134,7 +139,7 @@ namespace HotelManagement.Customers
                             Age = customer.getAge(),
                             Phone = customer.getPhone(),
                             Email = customer.getEmail(),
-                            Room = customer.getLastBookedRoom()
+                            Room = customer.getListOfReservedRooms()
                         });
                     };
                     break;

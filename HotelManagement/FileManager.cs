@@ -31,8 +31,8 @@ namespace HotelManagement
             this.path = path;
         }
         public String getPath() { return path; }
-      
-        public void openFile()
+
+        public int openFile(string purpose = null)
         {
             try
             {
@@ -46,11 +46,27 @@ namespace HotelManagement
                     filename = dlg.FileName;
                     this.path = filename;
                 }
-                if (System.IO.File.ReadAllLines(path).Length == 0) throw new EmptyFileException("");
+                try
+                {
+                    if (System.IO.File.ReadAllLines(path).Length == 0) throw new EmptyFileException("");
+                    String[] lines = System.IO.File.ReadAllLines(path);
+                    if (purpose == "hotel")
+                        if (!lines[0].StartsWith("hotel")) throw new InvalidHotelInfoException(lines[0]);
+                        else if (purpose == "booking")
+                            if (lines[0].StartsWith("hotel")) throw new InvalidHotelInfoException(lines[0]);
+                    return 0;
+                }
+                catch (InvalidHotelInfoException ex)
+                {
+                    MessageBox.Show(ex.Message);
+                    return -1;
+                }
+
             }
             catch (EmptyFileException ex)
             {
                 MessageBox.Show(ex.Message);
+                return -1;
             }
         }
         public List<Hotel> createList()
@@ -65,7 +81,7 @@ namespace HotelManagement
             foreach (var line in lines)
             {
                 String[] wordsArr = line.Split(' ').ToArray();
-                
+
                 if (line.StartsWith("hotel")) header = line;
                 else if (wordsArr[0].StartsWith("1"))
                 {
@@ -96,14 +112,15 @@ namespace HotelManagement
                 hotel1.setName(data[1]);
                 hotel1.setStars(System.Convert.ToInt32(data[2]));
                 index++;
-                if (index != lines.Length && lines[index].StartsWith("hotel")){ 
+                if (index != lines.Length && lines[index].StartsWith("hotel"))
+                {
                     list.Add(hotel1);
                     hotel1 = new Hotel();
                 }
             }
             return list;
         }
-       public void createListOfCustomers(Singleton_AllCustomers allCustomers)
+        public void createListOfCustomers(Singleton_AllCustomers allCustomers)
         {
             Singleton_AllHotels allHotels = Singleton_AllHotels.AllHotels;
             List<Customer> customers = new List<Customer>();
@@ -121,7 +138,7 @@ namespace HotelManagement
                 if (wordsArr.Length > 5)
                 {
 
-  
+
                     String[] dateTimesFrom = wordsArr[6].Split('/').ToArray();
                     dateFrom = new DateTime(Convert.ToInt32(dateTimesFrom[2]), Convert.ToInt32(dateTimesFrom[1]), Convert.ToInt32(dateTimesFrom[0]));
                     if (wordsArr.Length > 6)
@@ -160,15 +177,13 @@ namespace HotelManagement
                 if (option == 's')
                 {
                     allCustomers.getListOfCustomers().Where(x => x.getName() == customer.getName()).First().reserveStandartRoom(stRoom, dateFrom, dateTo);
-                    MessageBox.Show("The room " +  stRoom.getNumber() + "was reserved from "+ dateFrom+ "to " + dateTo);
                 }
                 else if (option == 'l')
                     allCustomers.getListOfCustomers().Where(x => x.getName() == customer.getName()).First().reserveLuxRoom(luxRoom, dateFrom, dateTo);
             }
 
-            return customers;
         }
-    
+
         public void saveChangesToExistingFile(ObservableCollection<Room> myObjects)
         {
             StreamWriter sw = new StreamWriter(path, false);
@@ -178,7 +193,7 @@ namespace HotelManagement
             foreach (var item in myObjects)
             {
                 str += "hotel ";
-                str += item.HotelName+ " ";
+                str += item.HotelName + " ";
                 str += item.Stars;
                 str += "\n";
                 str += item.Number + " ";
@@ -191,8 +206,8 @@ namespace HotelManagement
                 i++;
 
             }
-           sw.Write(str);
-           sw.Close();
+            sw.Write(str);
+            sw.Close();
         }
         public void saveAs(ObservableCollection<Room> myObjects)
         {

@@ -15,7 +15,7 @@
         <Label Content="Прізвище" HorizontalAlignment="Left" Margin="346,77,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="lastnameField" TextWrapping="Wrap" Text="" Margin="352,103,150,326"/>
         <Label Content="Особистий телефон" HorizontalAlignment="Left" Margin="136,249,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="phoneField" TextWrapping="Wrap" Text="" Margin="136,280,353,149" RenderTransformOrigin="0.477,0.498"/>
+        <TextBox x:Name="phoneField" Text ="+380" TextWrapping="Wrap"  Margin="136,280,353,149" RenderTransformOrigin="0.477,0.498"/>
         <Label Content="Email" HorizontalAlignment="Left" Margin="136,161,0,0" VerticalAlignment="Top"/>
         <Label Content="Вік" HorizontalAlignment="Left" Margin="346,161,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="emailField" TextWrapping="Wrap" Text="" Margin="136,196,366,233"/>

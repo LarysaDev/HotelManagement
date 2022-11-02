@@ -41,7 +41,6 @@ namespace HotelManagement.Rooms
 
             hasBathroom = true;
             dailyCleaning = true;
-
             switch (stars)
             {
                 case 1:

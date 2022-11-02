@@ -17,16 +17,13 @@ using System.Windows.Shapes;
 
 namespace HotelManagement.BookingForm
 {
-    /// <summary>
-    /// Interaction logic for BookingWindow.xaml
-    /// </summary>
+
     public partial class BookingWindow : Window
     {
         public BookingWindow()
         {
             InitializeComponent();
         }
-
         private void submitBtn_Click(object sender, RoutedEventArgs e)
         {
             Singleton_AllCustomers allCustomers = Singleton_AllCustomers.AllCustomers;
@@ -35,7 +32,6 @@ namespace HotelManagement.BookingForm
             Customer customer;
             try
             {
-                
                 if(ageField.Text.Length == 0)
                 {
                     throw new EmptyInputException("Age");
@@ -59,20 +55,27 @@ namespace HotelManagement.BookingForm
                 }
                 else email = emailField.Text;
 
-                if (phoneField.Text.Length == 0)
-                {
-                    throw new EmptyInputException("Phone");
+                if (!phoneField.Text.StartsWith("+380"))
+                    throw new InvalidInputInfoException("your phone doesn't start with +380");
+                else {
+                    if (phoneField.Text.Length == 0)
+                    {
+                        throw new EmptyInputException("Phone");
+                    }
+                    else phone = phoneField.Text;
+                    customer = new Customer(name, lastname, email, phone, age);
+                    allCustomers.addCustomer(customer);
+                    this.Hide();
                 }
-                else phone = phoneField.Text;
-                customer = new Customer(name, lastname, email, phone, age);
-                allCustomers.addCustomer(customer);
-                this.Hide();
             }
             catch (EmptyInputException ex)
             {
                 MessageBox.Show(ex.Message);
             } 
-            
+            catch(InvalidInputInfoException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }

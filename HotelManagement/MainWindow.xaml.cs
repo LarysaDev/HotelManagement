@@ -26,12 +26,6 @@ namespace HotelManagement
     public partial class MainWindow : Window
     {
 
-        public void fillHotelsData(Singleton_AllHotels allHotels, Singleton_AllCustomers allCustomers)
-        { 
-        }
-
-    
-        
         public MainWindow()
         {
             Singleton_AllHotels allHotels = Singleton_AllHotels.AllHotels;
@@ -58,23 +52,26 @@ namespace HotelManagement
        
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            this.Hide();
             CustomersInfo customersInfo = new CustomersInfo();
             customersInfo.Show();
+            this.Close();
+           
         }
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
-            this.Hide();
             RoomsInfo roomsInfo = new RoomsInfo();
             roomsInfo.Show();
+            this.Close();
+           
         }
 
         private void Button_Click_3(object sender, RoutedEventArgs e)
         {
-            this.Hide();
             ReservationWindow reservationW = new ReservationWindow();
             reservationW.Show();
+            this.Close();
+           
         }
 
         private void welcomeText_Copy_TextChanged(object sender, TextChangedEventArgs e)

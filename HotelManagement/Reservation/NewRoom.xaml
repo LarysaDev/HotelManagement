@@ -19,8 +19,8 @@
         <TextBox x:Name="roomsAmount" TextWrapping="Wrap" Text="" Margin="136,196,519,198"/>
         <TextBox x:Name="bedsAmount" TextWrapping="Wrap" Text="" Margin="352,196,310,198" />
         <Button x:Name="submitBtn" Content="Додати номер" HorizontalAlignment="Left" Height="35" Margin="303,365,0,0" VerticalAlignment="Top" Width="178" Click="submitBtn_Click"/>
-        <RadioButton x:Name="addToExisting" Content="Додати до існуючого готелю" HorizontalAlignment="Left" Margin="131,57,0,0" VerticalAlignment="Top"/>
-        <RadioButton x:Name="addToNew" Content="Додати до нового готелю" HorizontalAlignment="Left" Margin="352,57,0,0" VerticalAlignment="Top"/>
+        <RadioButton IsChecked="false" x:Name="addToExisting" Content="Додати до існуючого готелю" HorizontalAlignment="Left" Margin="131,57,0,0" VerticalAlignment="Top"/>
+        <RadioButton IsChecked="false" x:Name="addToNew" Content="Додати до нового готелю" HorizontalAlignment="Left" Margin="352,57,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="square_" TextWrapping="Wrap" Text="" Margin="352,280,310,114" />
         <Label Content="Ціна" HorizontalAlignment="Left" Margin="520,249,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="price_" TextWrapping="Wrap" Text="" Margin="520,280,142,114" />
