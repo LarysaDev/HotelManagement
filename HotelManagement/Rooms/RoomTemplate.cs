@@ -83,7 +83,7 @@ namespace HotelManagement.Rooms
         {
             return "Фен та міні косметика";
         }
-
+   
         public int getNumber()
         {
             return this.numberOfRoom;

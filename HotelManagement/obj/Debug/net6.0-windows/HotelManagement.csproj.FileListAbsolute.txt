@@ -29,3 +29,5 @@ C:\Users\HP\source\repos\HotelManagement\HotelManagement\obj\Debug\net6.0-window
 C:\Users\HP\source\repos\HotelManagement\HotelManagement\obj\Debug\net6.0-windows\BookingForm\BookingWindow.baml
 C:\Users\HP\source\repos\HotelManagement\HotelManagement\obj\Debug\net6.0-windows\Reservation\NewRoom.g.cs
 C:\Users\HP\source\repos\HotelManagement\HotelManagement\obj\Debug\net6.0-windows\Reservation\NewRoom.baml
+C:\Users\HP\source\repos\HotelManagement\HotelManagement\obj\Debug\net6.0-windows\Reservation\ReservationProposition.g.cs
+C:\Users\HP\source\repos\HotelManagement\HotelManagement\obj\Debug\net6.0-windows\Reservation\ReservationProposition.baml

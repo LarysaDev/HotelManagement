@@ -131,55 +131,72 @@ namespace HotelManagement
             char option = ' ';
             foreach (var line in lines)
             {
-                String[] wordsArr = line.Split(' ').ToArray();
-                DateTime dateTo = new DateTime();
-                DateTime dateFrom = new DateTime();
-                customer = new Customer(wordsArr[0], wordsArr[1], wordsArr[2], wordsArr[3], Convert.ToInt32(wordsArr[4]));
-                if (wordsArr.Length > 5)
+                try
                 {
+                    String[] wordsArr = line.Split(' ').ToArray();
+                    DateTime dateTo = new DateTime();
+                    DateTime dateFrom = new DateTime();
 
-
-                    String[] dateTimesFrom = wordsArr[6].Split('/').ToArray();
-                    dateFrom = new DateTime(Convert.ToInt32(dateTimesFrom[2]), Convert.ToInt32(dateTimesFrom[1]), Convert.ToInt32(dateTimesFrom[0]));
-                    if (wordsArr.Length > 6)
+                    customer = new Customer(wordsArr[0], wordsArr[1], wordsArr[2], wordsArr[3], Convert.ToInt32(wordsArr[4]));
+                    if (wordsArr.Length > 5)
                     {
-                        String[] dateTimesTo = wordsArr[7].Split('/').ToArray();
-                        dateTo = new DateTime(Convert.ToInt32(dateTimesTo[2]), Convert.ToInt32(dateTimesTo[1]), Convert.ToInt32(dateTimesTo[0]));
-                    }
 
-                    if (wordsArr[5].StartsWith("1"))
-                    {
-                        option = 's';
-                        foreach (var hotel in allHotels.getListOfHotels())
+
+                        String[] dateTimesFrom = wordsArr[6].Split('/').ToArray();
+                        dateFrom = new DateTime(Convert.ToInt32(dateTimesFrom[2]), Convert.ToInt32(dateTimesFrom[1]), Convert.ToInt32(dateTimesFrom[0]));
+                        if (wordsArr.Length > 6)
                         {
-                            foreach (var room in hotel.getStandartRooms())
+                            String[] dateTimesTo = wordsArr[7].Split('/').ToArray();
+                            dateTo = new DateTime(Convert.ToInt32(dateTimesTo[2]), Convert.ToInt32(dateTimesTo[1]), Convert.ToInt32(dateTimesTo[0]));
+                        }
+
+                        TimeSpan subtractOfDate = dateTo.Subtract(dateFrom);
+
+                        if (subtractOfDate.TotalDays == 0 || subtractOfDate.TotalDays < 0)
+                            throw new InvalidDateException("Кількість обраних днів некоректна для користувача " + customer.getName());
+
+                        DateTime localDate = DateTime.Now;
+                        if (dateFrom.Subtract(localDate).TotalDays < 0 || localDate.Subtract(dateFrom).TotalDays == 0)
+                            throw new InvalidDateException("Ви обрали неактуальну дату для користувача " + customer.getName());
+
+                        if (wordsArr[5].StartsWith("1"))
+                        {
+                            option = 's';
+                            foreach (var hotel in allHotels.getListOfHotels())
                             {
-                                if (room.getNumber() == Convert.ToInt32(wordsArr[5])) stRoom = room; break;
+                                foreach (var room in hotel.getStandartRooms())
+                                {
+                                    if (room.getNumber() == Convert.ToInt32(wordsArr[5])) stRoom = room; break;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            option = 'l';
+                            foreach (var hotel in allHotels.getListOfHotels())
+                            {
+                                foreach (var room in hotel.getLuxRooms())
+                                {
+                                    if (room.getNumber() == Convert.ToInt32(wordsArr[5])) luxRoom = room; break;
+                                }
                             }
                         }
                     }
-                    else
-                    {
-                        option = 'l';
-                        foreach (var hotel in allHotels.getListOfHotels())
-                        {
-                            foreach (var room in hotel.getLuxRooms())
-                            {
-                                if (room.getNumber() == Convert.ToInt32(wordsArr[5])) luxRoom = room; break;
-                            }
-                        }
-                    }
-                }
-                else option = ' ';
-                customers.Add(customer);
-                allCustomers.addCustomer(customer);
+                    else option = ' ';
+                    customers.Add(customer);
+                    allCustomers.addCustomer(customer);
 
-                if (option == 's')
-                {
-                    allCustomers.getListOfCustomers().Where(x => x.getName() == customer.getName()).First().reserveStandartRoom(stRoom, dateFrom, dateTo);
+                    if (option == 's')
+                    {
+                        allCustomers.getListOfCustomers().Where(x => x.getName() == customer.getName()).First().reserveStandartRoom(stRoom, dateFrom, dateTo);
+                    }
+                    else if (option == 'l')
+                        allCustomers.getListOfCustomers().Where(x => x.getName() == customer.getName()).First().reserveLuxRoom(luxRoom, dateFrom, dateTo);
                 }
-                else if (option == 'l')
-                    allCustomers.getListOfCustomers().Where(x => x.getName() == customer.getName()).First().reserveLuxRoom(luxRoom, dateFrom, dateTo);
+                catch(InvalidDateException ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
             }
 
         }

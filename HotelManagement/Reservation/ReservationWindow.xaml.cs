@@ -13,6 +13,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Printing;
 using System.Reflection;
 using System.Security.Cryptography.Xml;
 using System.Text;
@@ -49,6 +50,8 @@ namespace HotelManagement.Reservation
             Singleton_AllHotels allHotels = Singleton_AllHotels.AllHotels;
            
         }
+
+
         private static ObservableCollection<Room> displayList(List<Hotel> list, DataGrid listOfRooms, ObservableCollection<Room> myObjects)
         {
             var dg = listOfRooms;
@@ -384,18 +387,10 @@ namespace HotelManagement.Reservation
 
                         if (dateFrom.Text.Length > 0)
                         {
-
-
-                            BookingWindow bookingForm = new BookingWindow();
-                            bookingForm.ShowDialog();
-                            if (bookingForm.Visibility == Visibility.Hidden)
+                            try
                             {
-                                bookingForm.Close();
                                 DateTime userDateFrom1 = new DateTime();
                                 DateTime userDateTo1 = new DateTime();
-                                double userPriceFrom = 0;
-                                double userPriceTo = 0;
-                                int userStars = 0;
 
                                 if (dateFrom.SelectedDate != null)
                                 {
@@ -403,32 +398,237 @@ namespace HotelManagement.Reservation
                                     if (dateTo.SelectedDate != null)
                                         userDateTo1 = dateTo.SelectedDate.Value;
                                 }
+
+
+                                TimeSpan subtractOfDate = userDateTo1.Subtract(userDateFrom1);
+
+                                if (subtractOfDate.TotalDays == 0 || subtractOfDate.TotalDays < 0)
+                                    throw new InvalidDateException("Кількість обраних днів некоректна");
+
+                                DateTime localDate = DateTime.Now;
+                                if (userDateFrom1.Subtract(localDate).TotalDays < 0 || localDate.Subtract(userDateFrom1).TotalDays == 0)
+                                    throw new InvalidDateException("Ви обрали неактуальну дату.");
+
+                                //      
+
+
+                                double userPriceFrom = 0;
+                                double userPriceTo = 0;
+                                int userStars = 0;
+
+
+
                                 String value = "";
                                 foreach (Room room in listOfRooms.SelectedItems)
                                     value = System.Convert.ToString(room.Number);
 
                                 Singleton_AllCustomers allCustomers = Singleton_AllCustomers.AllCustomers;
+
+
                                 if (value.StartsWith("2"))
                                 {
+
+                                    String proposition = "";
                                     int roomN = System.Convert.ToInt32(value);
                                     LuxRoom room = new LuxRoom();
                                     foreach (var hotel in allHotels.getListOfHotels())
-                                        foreach (var luxRoom in hotel.getLuxRooms())
-                                            if (luxRoom.getNumber() == roomN) room = luxRoom;
+                                        foreach (var stRoom in hotel.getLuxRooms())
+                                            if (stRoom.getNumber() == roomN) room = stRoom;
+                                    bool isReserved = checkLuxReservation(room, userDateFrom1, userDateTo1);
+                                    List<DateTime> propositionDates = new List<DateTime>();
+                                    List<DateTime> reservedDaysList = new List<DateTime>();
 
-                                    allCustomers.getListOfCustomers()[allCustomers.getListOfCustomers().Count - 1].reserveLuxRoom(room, userDateFrom1, userDateTo1);
+                                    if (isReserved == true)
+                                    {
+                                        ReservationProposition reservationProposition = new ReservationProposition();
+                                        reservationProposition.Show();
+
+                                        int reservedDays = 0;
+                                        int allDays = 0;
+                                        for (var day = userDateFrom1.Date; day.Date <= userDateTo1.Date; day = day.AddDays(1))
+                                        {
+                                            allDays++;
+                                            if (room.getBookedDays().Contains(day))
+                                            {
+                                                propositionDates.Add(day);
+                                                reservedDays++;
+                                            }
+                                            else reservedDaysList.Add(day);
+                                        }
+                                        if (reservedDays == allDays)
+                                        {
+                                            proposition += "Цей номер є зайнятий. Ви можете обрати один з вільних:";
+                                            foreach (var hotel in allHotels.getListOfHotels())
+                                            {
+                                                foreach (var stRoom in hotel.getLuxRooms())
+                                                {
+                                                    if (stRoom.checkIfReserved(userDateFrom1, userDateTo1) == false)
+                                                        proposition += stRoom.getNumber() + ", ";
+                                                }
+                                            }
+                                            proposition += "\n А на період з " + userDateFrom1.ToShortDateString() + " до " + userDateTo1.ToShortDateString() +
+                                             " Ви можете забронювати номер " + room.getNumber();
+                                            reservationProposition.proppositionField.Text = proposition;
+                                        }
+                                        else
+                                        {
+                                            proposition += "На період з " + propositionDates[0].ToShortDateString() + " до " + propositionDates[propositionDates.Count - 1].ToShortDateString() + " Ви зможете забронювати такі номери:";
+                                            foreach (var hotel in allHotels.getListOfHotels())
+                                            {
+                                                foreach (var stRoom in hotel.getLuxRooms())
+                                                {
+                                                    int allPropDays = 0;
+                                                    int allAvailableDays = 0;
+                                                    for (var day = propositionDates[0].Date; day.Date <= propositionDates[propositionDates.Count - 1].Date; day = day.AddDays(1))
+                                                    {
+                                                        allPropDays++;
+                                                        if (!stRoom.getBookedDays().Contains(day)) allAvailableDays++;
+                                                    }
+                                                    if (allPropDays == allAvailableDays)
+                                                        proposition += stRoom.getNumber() + ", ";
+                                                }
+                                            }
+                                            proposition += "\n А на період з " + reservedDaysList[0].ToShortDateString() + " до " + reservedDaysList[reservedDaysList.Count - 1].ToShortDateString() +
+                                             " Ви можете забронювати номер " + room.getNumber();
+                                            reservationProposition.proppositionField.Text = proposition;
+                                        }
+
+                                    }
+                                    else
+                                    {
+                                        MessageBox.Show("option");
+                                        BookingWindow bookingForm = new BookingWindow();
+                                        bookingForm.ShowDialog();
+                                        if (bookingForm.Visibility == Visibility.Hidden)
+                                        {
+                                            bookingForm.Close();
+                                            if (dateFrom.SelectedDate != null)
+                                            {
+                                                userDateFrom1 = dateFrom.SelectedDate.Value;
+                                                if (dateTo.SelectedDate != null)
+                                                    userDateTo1 = dateTo.SelectedDate.Value;
+                                            }
+
+                                            foreach (Room room_ in listOfRooms.SelectedItems)
+                                                value = System.Convert.ToString(room_.Number);
+
+                                            if (value.StartsWith("1"))
+                                            {
+                                                int roomN_ = System.Convert.ToInt32(value);
+                                                LuxRoom room_ = new LuxRoom();
+                                                foreach (var hotel in allHotels.getListOfHotels())
+                                                    foreach (var stRoom in hotel.getLuxRooms())
+                                                        if (stRoom.getNumber() == roomN_) room_ = stRoom;
+
+                                                allCustomers.getListOfCustomers()[allCustomers.getListOfCustomers().Count - 1].reserveLuxRoom(room_, userDateFrom1, userDateTo1);
+                                            }
+                                        }
+                                    }
                                 }
                                 else
                                 {
+                                    String proposition = "";
                                     int roomN = System.Convert.ToInt32(value);
                                     StandartRoom room = new StandartRoom();
                                     foreach (var hotel in allHotels.getListOfHotels())
                                         foreach (var stRoom in hotel.getStandartRooms())
                                             if (stRoom.getNumber() == roomN) room = stRoom;
+                                    bool isReserved = checkStandartReservation(room, userDateFrom1, userDateTo1);
+                                    List<DateTime> propositionDates = new List<DateTime>();
+                                    List<DateTime> reservedDaysList = new List<DateTime>();
 
-                                    allCustomers.getListOfCustomers()[allCustomers.getListOfCustomers().Count - 1].reserveStandartRoom(room, userDateFrom1, userDateTo1);
+                                    if (isReserved == true)
+                                    {
+                                        ReservationProposition reservationProposition = new ReservationProposition();
+                                        reservationProposition.Show();
+
+                                        int reservedDays = 0;
+                                        int allDays = 0;
+                                        for (var day = userDateFrom1.Date; day.Date <= userDateTo1.Date; day = day.AddDays(1))
+                                        {
+                                            allDays++;
+                                            if (room.getBookedDays().Contains(day))
+                                            {
+                                                propositionDates.Add(day);
+                                                reservedDays++;
+                                            }
+                                            else reservedDaysList.Add(day);
+                                        }
+                                        if (reservedDays == allDays)
+                                        {
+                                            proposition += "Цей номер є зайнятий. Ви можете обрати один з вільних:";
+                                            foreach (var hotel in allHotels.getListOfHotels())
+                                            {
+                                                foreach (var stRoom in hotel.getStandartRooms())
+                                                {
+                                                    if (stRoom.checkIfReserved(userDateFrom1, userDateTo1) == false)
+                                                        proposition += stRoom.getNumber() + ", ";
+                                                }
+                                            }
+                                            proposition += "\n А на період з " + userDateFrom1.ToShortDateString() + " до " + userDateTo1.ToShortDateString() +
+                                              " Ви можете забронювати номер " + room.getNumber();
+                                            reservationProposition.proppositionField.Text = proposition;
+                                        }
+                                        else
+                                        {
+                                            proposition += "На період з " + propositionDates[0].ToShortDateString() + " до " + propositionDates[propositionDates.Count - 1].ToShortDateString() + " Ви зможете забронювати такі номери:";
+                                            foreach (var hotel in allHotels.getListOfHotels())
+                                            {
+                                                foreach (var stRoom in hotel.getStandartRooms())
+                                                {
+                                                    int allPropDays = 0;
+                                                    int allAvailableDays = 0;
+                                                    for (var day = propositionDates[0].Date; day.Date <= propositionDates[propositionDates.Count - 1].Date; day = day.AddDays(1))
+                                                    {
+                                                        allPropDays++;
+                                                        if (!stRoom.getBookedDays().Contains(day)) allAvailableDays++;
+                                                    }
+                                                    if (allPropDays == allAvailableDays)
+                                                        proposition += stRoom.getNumber() + ", ";
+                                                }
+                                            }
+                                            proposition += "\n А на період з " + reservedDaysList[0].ToShortDateString() + " до " + reservedDaysList[reservedDaysList.Count - 1].ToShortDateString() +
+                                             " Ви можете забронювати номер " + room.getNumber();
+                                            reservationProposition.proppositionField.Text = proposition;
+
+                                        }
+
+                                    }
+                                    else
+                                    {
+                                        MessageBox.Show("option");
+                                        BookingWindow bookingForm = new BookingWindow();
+                                        bookingForm.ShowDialog();
+                                        if (bookingForm.Visibility == Visibility.Hidden)
+                                        {
+                                            bookingForm.Close();
+                                            if (dateFrom.SelectedDate != null)
+                                            {
+                                                userDateFrom1 = dateFrom.SelectedDate.Value;
+                                                if (dateTo.SelectedDate != null)
+                                                    userDateTo1 = dateTo.SelectedDate.Value;
+                                            }
+
+                                            foreach (Room room_ in listOfRooms.SelectedItems)
+                                                value = System.Convert.ToString(room_.Number);
+
+                                            if (value.StartsWith("1"))
+                                            {
+                                                int roomN_ = System.Convert.ToInt32(value);
+                                                StandartRoom room_ = new StandartRoom();
+                                                foreach (var hotel in allHotels.getListOfHotels())
+                                                    foreach (var stRoom in hotel.getStandartRooms())
+                                                        if (stRoom.getNumber() == roomN_) room_ = stRoom;
+
+                                                allCustomers.getListOfCustomers()[allCustomers.getListOfCustomers().Count - 1].reserveStandartRoom(room_, userDateFrom1, userDateTo1);
+                                            }
+                                        }
+                                    }
                                 }
-
+                            }
+                            catch (InvalidDateException ex)
+                            {
+                                MessageBox.Show(ex.Message);
                             }
 
                         }

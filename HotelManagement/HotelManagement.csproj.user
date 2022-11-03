@@ -16,6 +16,9 @@
     <Compile Update="Reservation\NewRoom.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Reservation\ReservationProposition.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Reservation\ReservationWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -34,6 +37,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Reservation\NewRoom.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Reservation\ReservationProposition.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Reservation\ReservationWindow.xaml">

@@ -1,0 +1,19 @@
+﻿<Window x:Class="HotelManagement.Reservation.ReservationProposition"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:HotelManagement.Reservation"
+        mc:Ignorable="d"
+        Title="ReservationProposition" Height="500" Width="400">
+    <Grid>
+        <TextBox HorizontalAlignment="Center" Margin="0,43,0,0" TextWrapping="Wrap" Text="На разі обраний Вами номер є вже зарезервований. 
+         В якості альтернативи пропонуємо Вам опцію подвійного бронювання " VerticalAlignment="Top" Width="304" Height="52"/>
+        <TextBox x:Name="proppositionField" HorizontalAlignment="Center" Margin="0,131,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="304" Height="78"/>
+        <Label Content="Пропозиція" HorizontalAlignment="Left" Margin="48,100,0,0" VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Center" Margin="0,214,0,0" TextWrapping="Wrap" Text="Будь ласка, оберіть номер з перелічених, які Ви б хотіли забронювати додатково" VerticalAlignment="Top" Width="304"/>
+        <TextBox x:Name="responseField" HorizontalAlignment="Center" Margin="0,253,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="304" Height="29"/>
+        <Button x:Name="submitDoubleReservation" Content="Підтвердити" Margin="138,350,138,44" Click="submitDoubleReservation_Click"/>
+
+    </Grid>
+</Window>
